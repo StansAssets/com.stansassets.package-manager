@@ -1,12 +1,12 @@
-﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
         <StansAssets.Foundation.UIElements.SettingsBlock label="Assembly definitions references" style="flex-grow: 1;">
             <ui:Toggle label="Use GUIDs" name="asd-references-use-guids" />
-            <StansAssets.PackageManager.Editor.ListViewMich name="asm-references" />
+            <StansAssets.PackageManager.Editor.ListViewMich name="asm-references" style="padding-right: 4px;" />
         </StansAssets.Foundation.UIElements.SettingsBlock>
         <StansAssets.Foundation.UIElements.SettingsBlock label="Assembly references" style="flex-grow: 1;" />
         <StansAssets.Foundation.UIElements.SettingsBlock label="Internal Visible To Assembly definitions references" style="flex-grow: 1;">
-            <StansAssets.PackageManager.Editor.ListViewMich name="internal-asm-references" />
+            <StansAssets.PackageManager.Editor.ListViewMich name="internal-asm-references" style="padding-right: 4px;" />
         </StansAssets.Foundation.UIElements.SettingsBlock>
     </ui:VisualElement>
 </ui:UXML>
