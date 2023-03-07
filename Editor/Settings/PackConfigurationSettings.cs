@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
-    public class PackConfigurationSettings : PackageScriptableSettingsSingleton<PackConfigurationSettings>
+    class PackConfigurationSettings : PackageScriptableSettingsSingleton<PackConfigurationSettings>
     {
         [SerializeField] int m_ActiveConfigurationIndex;
         [SerializeField] List<PackConfiguration> m_Configurations = new List<PackConfiguration>();

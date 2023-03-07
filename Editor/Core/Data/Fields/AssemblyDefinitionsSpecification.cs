@@ -1,12 +1,16 @@
 ﻿using System;
-using UnityEngine.Serialization;
+using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
     [Serializable]
-    public class AssemblyDefinitionsSpecification
+    class AssemblyDefinitionsSpecification
     {
-        public AssemblyDefinitions RuntimeAssemblies = new AssemblyDefinitions();
-        public AssemblyDefinitions EditorAssemblies = new AssemblyDefinitions();
+        [SerializeField] AssemblyDefinitions m_RuntimeAssemblies = new AssemblyDefinitions();
+        [SerializeField] AssemblyDefinitions m_EditorAssemblies = new AssemblyDefinitions();
+
+        internal AssemblyDefinitions RuntimeAssemblies => m_RuntimeAssemblies;
+        
+        internal AssemblyDefinitions EditorAssemblies => m_EditorAssemblies;
     }
 }

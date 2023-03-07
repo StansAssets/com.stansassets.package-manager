@@ -5,7 +5,7 @@ using AssemblyBuilder = System.Reflection.Emit.AssemblyBuilder;
 
 namespace StansAssets.PackageManager.Editor
 {
-    class AssemblyBuilderUtils
+    static class AssemblyBuilderUtils
     {
         internal static Type GenerateEnumType(string enumName, string[] enumValues)
         {

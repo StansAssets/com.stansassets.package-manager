@@ -6,9 +6,9 @@ using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace StansAssets.PackageManager.Editor
 {
-    public class PackageManagerWindow : PackageSettingsWindow<PackageManagerWindow>
+    class PackageManagerWindow : PackageSettingsWindow<PackageManagerWindow>
     {
-        public static GUIContent WindowTitle => new GUIContent(PackageManagerConfig.DisplayName);
+        internal static GUIContent WindowTitle => new GUIContent(PackageManagerConfig.DisplayName);
 
         protected override PackageInfo GetPackageInfo() =>
             PackageManagerUtility.GetPackageInfo(PackageManagerConfig.PackageName);
