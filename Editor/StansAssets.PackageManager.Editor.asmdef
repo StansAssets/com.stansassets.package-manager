@@ -1,16 +1,20 @@
 {
-    "name": "StansAssets.PackageManager.Editor",
-    "rootNamespace": "",
-    "references": [],
-    "includePlatforms": [
-        "Editor"
-    ],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "StansAssets.PackageManager.Editor",
+  "rootNamespace": "StansAssets.PackageManager",
+  "references": [
+    "StansAssets.Plugins",
+    "StansAssets.Plugins.Editor",
+    "StansAssets.Foundation.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

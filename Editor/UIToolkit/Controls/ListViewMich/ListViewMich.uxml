@@ -1,0 +1,12 @@
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="mich-container">
+        <ui:ListView reorder-mode="Animated" reorderable="true" class="list-mich" />
+        <ui:VisualElement style="flex-direction: row; justify-content: flex-end; padding-right: 4px;">
+            <ui:VisualElement style="width: 16px; height: 16px; opacity: 0;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button text="+" name="add-item" class="action-button" style="width: 28px; height: 18px; white-space: nowrap; -unity-text-align: middle-center;" />
+                <ui:Button text="-" name="remove-item" class="action-button" style="width: 28px; height: 18px; white-space: nowrap; -unity-text-align: middle-center;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

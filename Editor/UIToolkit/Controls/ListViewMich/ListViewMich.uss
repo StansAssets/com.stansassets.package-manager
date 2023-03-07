@@ -1,0 +1,13 @@
+﻿.list-mich{
+    height: 100px;
+    max-height: 200px;
+    border-bottom-width: 1px;
+}
+
+.mich-container{
+    border-width: 1px;
+}
+
+.action-button{
+    -unity-font-style: bold;
+}

@@ -1,0 +1,28 @@
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="tabs-bar" style="flex-direction: column;">
+        <StansAssets.Foundation.UIElements.SettingsBlock label="Folders" style="margin-bottom: 0;">
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:Toggle label="Runtime" name="runtime" />
+                <ui:Toggle label="Tests" name="runtime-tests" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:Toggle label="Editor" name="editor" />
+                <ui:Toggle label="Tests" name="editor-tests" />
+            </ui:VisualElement>
+        </StansAssets.Foundation.UIElements.SettingsBlock>
+        <StansAssets.Foundation.UIElements.SettingsBlock label="General" style="margin-bottom: 0;">
+            <ui:Toggle label="Allow unsafe code" name="allow-unsafe-code" />
+            <ui:Toggle label="Auto referenced" name="auto-referenced" />
+            <ui:Toggle label="Override references" name="override-references" />
+            <ui:Toggle label="No engine references" name="no-engine-references" />
+        </StansAssets.Foundation.UIElements.SettingsBlock>
+    </ui:VisualElement>
+    <ui:VisualElement class="tabs-root">
+        <ui:VisualElement class="tabs-bar">
+            <ui:VisualElement class="toolbar__flexible-space" />
+            <StansAssets.Foundation.UIElements.ButtonStrip name="tabs" view-data-key="header-tabs" />
+            <ui:VisualElement class="toolbar__flexible-space" />
+        </ui:VisualElement>
+        <ui:ScrollView name="tabs-container" view-data-key="tabs-container-scroll" class="tabs-container" style="border-top-width: 1px;" />
+    </ui:VisualElement>
+</ui:UXML>

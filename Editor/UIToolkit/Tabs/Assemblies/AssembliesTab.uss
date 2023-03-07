@@ -1,0 +1,4 @@
+﻿.uxml-listview {
+    max-height: 200px;
+    padding-right: 8px;
+}
