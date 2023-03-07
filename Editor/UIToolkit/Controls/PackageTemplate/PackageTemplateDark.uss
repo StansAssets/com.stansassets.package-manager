@@ -1,3 +1,7 @@
 ﻿.tabs-root {
     background-color: rgb(56, 56, 56);
 }
+
+.tabs-bar {
+    border-bottom-color: rgb(81, 81, 81);
+}
