@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="item-border" style="flex-grow: 0; flex-direction: row; align-items: center; padding-left: 6px; padding-right: 4px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 1px; height: 22px;">
+        <ui:Label text="None" name="item-label" style="min-width: 120px; align-self: flex-start; width: 50%; flex-grow: 0; flex-shrink: 1; -unity-text-align: middle-left; height: 100%;" />
+        <uie:EnumField name="item-value" style="flex-shrink: 1; flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

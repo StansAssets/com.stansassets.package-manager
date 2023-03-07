@@ -1,31 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
 using UnityEditor;
+using UnityEditor.Compilation;
 using UnityEditor.UIElements;
 using UnityEditorInternal;
 using UnityEngine.UIElements;
+using Label = UnityEngine.UIElements.Label;
 
 namespace StansAssets.PackageManager.Editor
 {
     class AssembliesTab : BaseTab
     {
-        static class AssemblyDefinitionAssetItem
-        {
-            internal static VisualTreeAsset ItemComponent => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                $"{PackageManagerConfig.ControlsPath}/" +
-                "AssemblyDefinitionAssetItem/" +
-                "AssemblyDefinitionAssetItem.uxml");
-
-            internal static string ItemComponentStyle => $"{PackageManagerConfig.ControlsPath}/" +
-                                                         $"{nameof(AssemblyDefinitionAssetItem)}/" +
-                                                         $"{nameof(AssemblyDefinitionAssetItem)}";
-
-            internal const string ValueComponent = "item-value";
-            internal const string LabelComponent = "item-label";
-            internal const string DefaultEmptyValue = "None";
-        }
-
         public AssembliesTab(AssemblyDefinitions assemblyDefinitions)
             : base($"{PackageManagerConfig.WindowTabsPath}/Assemblies/AssembliesTab")
         {
@@ -38,6 +26,10 @@ namespace StansAssets.PackageManager.Editor
             BindAssemblyDefinitionAssets(Root,
                 "internal-asm-references",
                 assemblyDefinitions.InternalVisibleToAssemblyDefinitionAssets);
+
+            BindPrecompiledAssemblies(Root,
+                "asm-precompiled",
+                assemblyDefinitions.PrecompiledAssemblies);
         }
 
         static void BindUseGuids(VisualElement root, AssemblyDefinitions assemblyDefinitions)
@@ -113,19 +105,129 @@ namespace StansAssets.PackageManager.Editor
                 label.text = item != null ? item.name : AssemblyDefinitionAssetItem.DefaultEmptyValue;
             };
         }
-    }
 
-    // public static class AssemblyLister
-    // {
-    //     [MenuItem("Tools/List Assemblies in Console")]
-    //     public static void PrintAssemblyNames()
-    //     {
-    //         var playerAssemblies = CompilationPipeline.GetPrecompiledAssemblyNames();
-    //
-    //         foreach (var assembly in playerAssemblies)
-    //         {
-    //             UnityEngine.Debug.Log(assembly.ToString());
-    //         }
-    //     }
-    // }
+        static void BindPrecompiledAssemblies(VisualElement root, string listViewName,
+            List<string> precompiledAssemblies)
+        {
+            var playerAssemblies = CompilationPipeline.GetPrecompiledAssemblyNames().ToList();
+            playerAssemblies.Insert(0, PrecompiledAssemblyItem.DefaultEmptyValue);
+
+            var assembliesEnum = AssemblyBuilderUtils.GenerateEnumType(
+                "PrecompiledAssembly", playerAssemblies.ToArray());
+            var assembliesEnumNames = Enum.GetNames(assembliesEnum).ToList();
+            var assembliesEnumValues = Enum.GetValues(assembliesEnum);
+
+            var listViewMich = root.Q<ListViewMich>(listViewName);
+
+            listViewMich.AddButton.clicked += () =>
+            {
+                var list = listViewMich.ListView;
+                precompiledAssemblies.Add(PrecompiledAssemblyItem.DefaultEmptyValue);
+                list.Refresh();
+            };
+
+            listViewMich.RemoveButton.clicked += () =>
+            {
+                var list = listViewMich.ListView;
+
+                if (list.selectedIndex == -1)
+                {
+                    return;
+                }
+
+                precompiledAssemblies.RemoveAt(list.selectedIndex);
+                list.Refresh();
+            };
+
+            var listView = listViewMich.ListView;
+            listView.itemHeight = 22;
+            listView.itemsSource = precompiledAssemblies;
+
+            listView.makeItem += () =>
+            {
+                var element = PrecompiledAssemblyItem.ItemComponent.CloneTree();
+                UIToolkitEditorUtility.ApplyStyle(element, PrecompiledAssemblyItem.ItemComponentStyle);
+
+                var label = element.Q<Label>(PrecompiledAssemblyItem.LabelComponent);
+                label.text = PrecompiledAssemblyItem.DefaultEmptyValue;
+
+                var field = element.Q<EnumField>();
+                field.Init(assembliesEnumValues.GetValue(0) as Enum, false);
+
+                field.RegisterValueChangedCallback(evt =>
+                {
+                    if (listView.selectedIndex == -1)
+                    {
+                        return;
+                    }
+
+                    precompiledAssemblies[listView.selectedIndex] = evt?.newValue.ToString();
+                    listView.Refresh();
+                });
+
+                return element;
+            };
+
+            listView.bindItem = (e, i) =>
+            {
+                var item = listView.itemsSource[i];
+
+                if (item == null)
+                {
+                    e.Q<Label>(PrecompiledAssemblyItem.LabelComponent)
+                        .text = PrecompiledAssemblyItem.DefaultEmptyValue;
+                    return;
+                }
+
+                var itemValue = assembliesEnumValues
+                    .GetValue(assembliesEnumNames.IndexOf(item.ToString())) as Enum;
+
+                if (itemValue == null)
+                {
+                    e.Q<Label>(PrecompiledAssemblyItem.LabelComponent)
+                        .text = PrecompiledAssemblyItem.ErrorValue;
+                    return;
+                }
+
+                var field = e.Q<EnumField>(PrecompiledAssemblyItem.ValueComponent);
+                field.value = itemValue;
+
+                var label = e.Q<Label>(PrecompiledAssemblyItem.LabelComponent);
+                label.text = itemValue.ToString();
+            };
+        }
+
+        static class AssemblyDefinitionAssetItem
+        {
+            internal static VisualTreeAsset ItemComponent => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                $"{PackageManagerConfig.ControlsPath}/" +
+                "AssemblyDefinitionAssetItem/" +
+                "AssemblyDefinitionAssetItem.uxml");
+
+            internal static string ItemComponentStyle => $"{PackageManagerConfig.ControlsPath}/" +
+                                                         "AssemblyDefinitionAssetItem/" +
+                                                         "AssemblyDefinitionAssetItem";
+
+            internal const string ValueComponent = "item-value";
+            internal const string LabelComponent = "item-label";
+            internal const string DefaultEmptyValue = "None";
+        }
+
+        static class PrecompiledAssemblyItem
+        {
+            internal static VisualTreeAsset ItemComponent => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                $"{PackageManagerConfig.ControlsPath}/" +
+                "PrecompiledAssemblyItem/" +
+                "PrecompiledAssemblyItem.uxml");
+
+            internal static string ItemComponentStyle => $"{PackageManagerConfig.ControlsPath}/" +
+                                                         "PrecompiledAssemblyItem/" +
+                                                         "PrecompiledAssemblyItem";
+
+            internal const string ValueComponent = "item-value";
+            internal const string LabelComponent = "item-label";
+            internal const string DefaultEmptyValue = "None";
+            internal const string ErrorValue = "Not found";
+        }
+    }
 }

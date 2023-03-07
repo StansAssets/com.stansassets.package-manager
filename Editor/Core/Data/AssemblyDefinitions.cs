@@ -10,5 +10,6 @@ namespace StansAssets.PackageManager
         public bool UseGuids;
         public List<AssemblyDefinitionAsset> AssemblyDefinitionAssets;
         public List<AssemblyDefinitionAsset> InternalVisibleToAssemblyDefinitionAssets;
+        public List<string> PrecompiledAssemblies;
     }
 }

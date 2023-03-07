@@ -1,0 +1,3 @@
+﻿.item-border{
+    border-bottom-color: rgb(159, 159, 159);
+}
