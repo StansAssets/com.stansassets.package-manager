@@ -5,3 +5,7 @@
 .tabs-bar {
     border-bottom-color: rgb(81, 81, 81);
 }
+
+.double-toggle-container{
+    border-bottom-color: rgba(81, 81, 81, 0.55);
+}

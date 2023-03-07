@@ -5,3 +5,8 @@
 .tabs-bar {
     border-bottom-width: 1px;
 }
+
+.double-toggle-container {
+    border-bottom-width: 1px;
+    margin-bottom: 8px;
+}

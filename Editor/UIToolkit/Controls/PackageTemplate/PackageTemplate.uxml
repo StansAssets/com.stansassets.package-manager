@@ -1,11 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <ui:VisualElement class="tabs-bar" style="flex-direction: column;">
         <StansAssets.Foundation.UIElements.SettingsBlock label="Folders" style="margin-bottom: 0;">
-            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:VisualElement class="double-toggle-container" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap;">
                 <ui:Toggle label="Runtime" name="runtime" />
                 <ui:Toggle label="Tests" name="runtime-tests" />
             </ui:VisualElement>
-            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:VisualElement class="double-toggle-container" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap;">
                 <ui:Toggle label="Editor" name="editor" />
                 <ui:Toggle label="Tests" name="editor-tests" />
             </ui:VisualElement>
