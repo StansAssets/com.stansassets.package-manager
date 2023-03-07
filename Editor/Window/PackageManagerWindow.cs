@@ -19,5 +19,10 @@ namespace StansAssets.PackageManager.Editor
             // AddTab("Settings", new SettingsTab());
             AddTab("About", new AboutTab());
         }
+
+        void OnDisable()
+        {
+            PackConfigurationSettings.Save();
+        }
     }
 }
