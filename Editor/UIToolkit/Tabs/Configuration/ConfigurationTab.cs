@@ -19,16 +19,16 @@ namespace StansAssets.PackageManager.Editor
         static void BindNamingConvention(VisualElement root, NamingConvention namingConvention)
         {
             var prefix = root.Q<TextField>("prefix");
-            prefix.SetValueWithoutNotify(namingConvention.m_Prefix);
-            prefix.RegisterValueChangedCallback(v => namingConvention.m_Prefix = v.newValue);
+            prefix.SetValueWithoutNotify(namingConvention.Prefix);
+            prefix.RegisterValueChangedCallback(v => namingConvention.Prefix = v.newValue);
 
             var postfix = root.Q<TextField>("postfix");
-            postfix.SetValueWithoutNotify(namingConvention.m_Postfix);
-            postfix.RegisterValueChangedCallback(v => namingConvention.m_Postfix = v.newValue);
+            postfix.SetValueWithoutNotify(namingConvention.Postfix);
+            postfix.RegisterValueChangedCallback(v => namingConvention.Postfix = v.newValue);
 
             var nameConvention = root.Q<EnumField>("name-convention");
-            nameConvention.SetValueWithoutNotify(namingConvention.m_ConventionType);
-            nameConvention.RegisterValueChangedCallback(v => namingConvention.m_ConventionType = (NameConventionType)v.newValue);
+            nameConvention.SetValueWithoutNotify(namingConvention.ConventionType);
+            nameConvention.RegisterValueChangedCallback(v => namingConvention.ConventionType = (NameConventionType)v.newValue);
         }
     }
 }

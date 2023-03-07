@@ -6,8 +6,8 @@ namespace StansAssets.PackageManager
     [Serializable]
     public class NamingConvention
     {
-        public string m_Prefix;
-        public string m_Postfix;
-        public NameConventionType m_ConventionType;
+        public string Prefix;
+        public string Postfix;
+        public NameConventionType ConventionType;
     }
 }
