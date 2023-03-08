@@ -76,20 +76,9 @@ namespace StansAssets.PackageManager.Editor
                 var label = element.Q<Label>(AssemblyDefinitionAssetItem.LabelComponent);
                 label.text = AssemblyDefinitionAssetItem.DefaultEmptyValue;
 
-                var field = element.Q<ObjectField>();
+                var field = element.Q<ObjectField>(AssemblyDefinitionAssetItem.ValueComponent);
                 field.objectType = typeof(AssemblyDefinitionAsset);
                 field.value = null;
-
-                field.RegisterValueChangedCallback(evt =>
-                {
-                    if (listView.selectedIndex == -1)
-                    {
-                        return;
-                    }
-
-                    assemblyDefinitionAssets[listView.selectedIndex] = evt?.newValue as AssemblyDefinitionAsset;
-                    listView.Refresh();
-                });
 
                 return element;
             };
@@ -100,6 +89,11 @@ namespace StansAssets.PackageManager.Editor
 
                 var field = e.Q<ObjectField>(AssemblyDefinitionAssetItem.ValueComponent);
                 field.value = item;
+                field.RegisterValueChangedCallback(evt =>
+                {
+                    assemblyDefinitionAssets[i] = evt?.newValue as AssemblyDefinitionAsset;
+                    listView.Refresh();
+                });
 
                 var label = e.Q<Label>(AssemblyDefinitionAssetItem.LabelComponent);
                 label.text = item != null ? item.name : AssemblyDefinitionAssetItem.DefaultEmptyValue;
@@ -154,22 +148,19 @@ namespace StansAssets.PackageManager.Editor
                 var field = element.Q<EnumField>();
                 field.Init(assembliesEnumValues.GetValue(0) as Enum, false);
 
-                field.RegisterValueChangedCallback(evt =>
-                {
-                    if (listView.selectedIndex == -1)
-                    {
-                        return;
-                    }
-
-                    precompiledAssemblies[listView.selectedIndex] = evt?.newValue.ToString();
-                    listView.Refresh();
-                });
-
                 return element;
             };
 
             listView.bindItem = (e, i) =>
             {
+                var field = e.Q<EnumField>(PrecompiledAssemblyItem.ValueComponent);
+
+                field.RegisterValueChangedCallback(evt =>
+                {
+                    precompiledAssemblies[i] = evt?.newValue.ToString();
+                    listView.Refresh();
+                });
+
                 var item = listView.itemsSource[i];
 
                 if (item == null)
@@ -189,7 +180,6 @@ namespace StansAssets.PackageManager.Editor
                     return;
                 }
 
-                var field = e.Q<EnumField>(PrecompiledAssemblyItem.ValueComponent);
                 field.value = itemValue;
 
                 var label = e.Q<Label>(PrecompiledAssemblyItem.LabelComponent);
