@@ -6,7 +6,7 @@ namespace StansAssets.PackageManager
 {
     static class PackageManagerEditorMenu
     {
-        [MenuItem(PackageManagerConfig.RootMenu + "Settings", false, 0)]
+        [MenuItem(PackageManagerConfig.RootMenu + "/Settings", false, 0)]
         internal static void OpenSettings()
         {
             var windowTitle = PackageManagerWindow.WindowTitle;

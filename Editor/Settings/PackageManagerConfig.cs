@@ -9,8 +9,7 @@ namespace StansAssets.PackageManager
         internal const string PackageName = "com.stansassets.package-manager";
         internal const string DisplayName = "Package Manager";
         internal const string DocumentationUrl = "https://github.com/StansAssets/com.stansassets.package-manager";
-        internal const string RootMenu = PluginsDevKitPackage.RootMenu + "/" + DisplayName + "/";
-
+        internal const string RootMenu = PluginsDevKitPackage.RootMenu + "/" + DisplayName;
         internal const string RootPath = "Packages/" + PackageName;
 
 #if UNITY_2019_4_OR_NEWER
