@@ -5,10 +5,28 @@ namespace StansAssets.PackageManager
     [Serializable]
     public enum NameConventionType
     {
+        /// <summary>
+        /// No formatting would apply to provided user variant.
+        /// </summary>
         None = 0,
-        CamelCase = 1, // firstName 
-        SnakeCase = 2, // first_name 
-        KebabkCase = 3, // first-name 
-        PascalCase = 4 // FirstName 
+        /// <summary>
+        /// Example: firstName
+        /// </summary>
+        CamelCase = 1,
+        
+        /// <summary>
+        /// Example: first_name
+        /// </summary>
+        SnakeCase = 2,  
+        
+        /// <summary>
+        /// Example: first-name 
+        /// </summary>
+        KebabkCase = 3,
+        
+        /// <summary>
+        /// Example: FirstName
+        /// </summary>
+        PascalCase = 4,
     }
 }
