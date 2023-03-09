@@ -6,6 +6,11 @@ namespace StansAssets.PackageManager
     {
         internal static string BuildName(string name, NamingConvention convention)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.Empty;
+            }
+
             var result = FormatTextByConvention(name, convention.ConventionType);
             return $"{convention.Prefix}.{result}.{convention.Postfix}";
         }

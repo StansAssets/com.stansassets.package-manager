@@ -38,6 +38,11 @@ namespace StansAssets.PackageManager.Editor
                 tab.Value.element.RemoveFromHierarchy();
             }
 
+            if (!m_Tabs.Any())
+            {
+                return;
+            }
+
             var (_, element) = m_Tabs.First(i => i.Value.label.Equals(m_TabsButtons.Value)).Value;
             m_TabsContainer.Add(element);
         }
