@@ -40,6 +40,7 @@ namespace StansAssets.PackageManager.Editor
 
             m_TabControl = new TabControl(rootElement);
 
+            m_TabControl.AddTab("manager", "Manage", new ManagerTab());
             m_TabControl.AddTab("configuration", "Configuration", new ConfigurationTab());
             m_TabControl.AddTab("about", "About", new AboutTab());
 
