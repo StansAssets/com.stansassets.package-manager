@@ -15,8 +15,8 @@ namespace StansAssets.PackageManager.Editor
 
         protected override void OnWindowEnable(VisualElement root)
         {
+            AddTab("Manage", new ManagerTab());
             AddTab("Configuration", new ConfigurationTab());
-            // AddTab("Settings", new SettingsTab());
             AddTab("About", new AboutTab());
         }
 

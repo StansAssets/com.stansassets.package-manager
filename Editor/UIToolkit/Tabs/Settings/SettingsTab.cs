@@ -6,7 +6,7 @@ namespace StansAssets.PackageManager.Editor
     public class SettingsTab : BaseTab
     {
         public SettingsTab()
-            : base($"{PackageManagerConfig.WindowTabsPath}/SettingsTab")
+            : base($"{PackageManagerConfig.WindowTabsPath}/Settings/SettingsTab")
         {
         }
     }

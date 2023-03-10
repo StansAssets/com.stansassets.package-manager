@@ -39,5 +39,70 @@ namespace StansAssets.PackageManager
         internal GeneralSpecification General => m_GeneralSpecification;
 
         internal AssemblyDefinitionsSpecification AssemblyDefinitions => m_AssemblyDefinitions;
+
+        /// <summary>
+        /// Return a copy of this object
+        /// </summary>
+        /// <returns></returns>
+        internal PackConfiguration Copy()
+        {
+            var copy = new PackConfiguration();
+            CopyTo(copy);
+            
+            return copy;
+        }
+        
+        /// <summary>
+        /// Copy data from this object to
+        /// </summary>
+        /// <param name="to">copy to object</param>
+        internal void CopyTo(PackConfiguration to)
+        {
+            to.Name = Name;
+
+            to.Folders.Runtime = Folders.Runtime;
+            to.Folders.RuntimeTests = Folders.RuntimeTests;
+
+            to.Folders.Editor = Folders.Editor;
+            to.Folders.EditorTests = Folders.EditorTests;
+
+            to.General.AutoReferenced = General.AutoReferenced;
+            to.General.OverrideReferences = General.OverrideReferences;
+            to.General.AllowUnsafeCode = General.AllowUnsafeCode;
+            to.General.NoEngineReferences = General.NoEngineReferences;
+
+            to.NamingConvention.Prefix = NamingConvention.Prefix;
+            to.NamingConvention.Postfix = NamingConvention.Postfix;
+            to.NamingConvention.ConventionType = NamingConvention.ConventionType;
+
+            CopyAssemblyDefinitionsSpecification(AssemblyDefinitions, to.AssemblyDefinitions);
+        }
+
+        void CopyAssemblyDefinitionsSpecification(
+            AssemblyDefinitionsSpecification from,
+            AssemblyDefinitionsSpecification to)
+        {
+            CopyAssemblyDefinitions(from.RuntimeAssemblies, to.RuntimeAssemblies);
+            CopyAssemblyDefinitions(from.EditorAssemblies, to.EditorAssemblies);
+        }
+
+        void CopyAssemblyDefinitions(
+            AssemblyDefinitions from,
+            AssemblyDefinitions to)
+        {
+            to.UseGuids = from.UseGuids;
+
+            to.PrecompiledAssemblies.Clear();
+            to.PrecompiledAssemblies
+                .AddRange(from.PrecompiledAssemblies);
+
+            to.InternalVisibleToAssemblyDefinitionAssets.Clear();
+            to.InternalVisibleToAssemblyDefinitionAssets
+                .AddRange(from.InternalVisibleToAssemblyDefinitionAssets);
+
+            to.AssemblyDefinitionAssets.Clear();
+            to.AssemblyDefinitionAssets
+                .AddRange(from.AssemblyDefinitionAssets);
+        }
     }
 }

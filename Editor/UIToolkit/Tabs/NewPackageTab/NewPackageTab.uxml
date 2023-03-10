@@ -1,0 +1,16 @@
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement style="flex-direction: row; justify-content: flex-end;">
+        <ui:Button text="Reset" tooltip="Reset to Configuration" name="reset-button" style="width: 60px;" />
+    </ui:VisualElement>
+    <StansAssets.Foundation.UIElements.SettingsBlock label="New Package" name="SettingsBlock" style="align-items: stretch; margin-bottom: 0;">
+        <ui:VisualElement style="margin-top: 10px;">
+            <ui:TextField picking-mode="Ignore" name="display-name-value" label="Display name" value="An example Name" style="flex-grow: 1;" />
+            <ui:TextField picking-mode="Ignore" name="name-value" label="Name" value="An example Name" style="flex-grow: 1;" />
+            <ui:TextField label="Preview" name="name-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
+        </ui:VisualElement>
+    </StansAssets.Foundation.UIElements.SettingsBlock>
+    <ui:VisualElement name="template-container" style="flex-grow: 1;" />
+    <ui:VisualElement name="bottom-toolbar">
+        <ui:Button text="Create" name="create-button" />
+    </ui:VisualElement>
+</ui:UXML>
