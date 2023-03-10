@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_2019_4_OR_NEWER
+
+using System.Collections.Generic;
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
 using UnityEditor;
@@ -7,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
 {
-    public class PackageManagerSettingsProvider : SettingsProvider
+    class PackageManagerSettingsProvider : SettingsProvider
     {
         readonly string m_WindowUIFilesRootPath = $"{PluginsDevKitPackage.UIToolkitPath}/SettingsWindow";
 
@@ -59,3 +61,5 @@ namespace StansAssets.PackageManager.Editor
         }
     }
 }
+
+#endif

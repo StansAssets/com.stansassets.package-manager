@@ -3,7 +3,7 @@
 namespace StansAssets.PackageManager
 {
     [Serializable]
-    public enum NameConventionType
+    enum NameConventionType
     {
         /// <summary>
         /// No formatting would apply to provided user variant.

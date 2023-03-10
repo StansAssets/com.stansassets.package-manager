@@ -3,9 +3,9 @@ using StansAssets.Plugins.Editor;
 
 namespace StansAssets.PackageManager.Editor
 {
-    public class SettingsTab : BaseTab
+    class SettingsTab : BaseTab
     {
-        public SettingsTab()
+        internal SettingsTab()
             : base($"{PackageManagerConfig.WindowTabsPath}/Settings/SettingsTab")
         {
         }

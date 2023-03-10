@@ -7,7 +7,7 @@ namespace StansAssets.PackageManager.Editor
 {
     class ConfigurationTab : BaseTab
     {
-        public ConfigurationTab()
+        internal ConfigurationTab()
             : base($"{PackageManagerConfig.WindowTabsPath}/Configuration/ConfigurationTab")
         {
             var conf = PackConfigurationSettings.Instance.ActiveConfiguration;

@@ -6,7 +6,7 @@ namespace StansAssets.PackageManager.Editor
 {
     class PackageTemplate : VisualElement
     {
-        public PackageTemplate(VisualElement root, PackConfiguration packConfiguration)
+        internal PackageTemplate(VisualElement root, PackConfiguration packConfiguration)
         {
             UIToolkitEditorUtility.CloneTreeAndApplyStyle(root,
                 $"{PackageManagerConfig.ControlsPath}/PackageTemplate/PackageTemplate");

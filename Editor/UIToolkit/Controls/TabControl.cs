@@ -15,7 +15,7 @@ namespace StansAssets.PackageManager.Editor
         readonly ButtonStrip m_TabsButtons;
         readonly ScrollView m_TabsContainer;
 
-        public TabControl(VisualElement root)
+        internal TabControl(VisualElement root)
         {
             m_TabsContainer = root.Q<ScrollView>("tabs-container");
 

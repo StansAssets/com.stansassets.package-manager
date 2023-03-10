@@ -1,13 +1,15 @@
-﻿using JetBrains.Annotations;
+﻿#if UNITY_2019_4_OR_NEWER
+
+using JetBrains.Annotations;
 using StansAssets.Foundation.Editor;
 using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
 {
-    public class ListViewMich : VisualElement
+    class ListViewMich : VisualElement
     {
         [UsedImplicitly]
-        public new class UxmlFactory : UxmlFactory<ListViewMich, UxmlTraits>
+        internal new class UxmlFactory : UxmlFactory<ListViewMich, UxmlTraits>
         {
         }
 
@@ -17,8 +19,10 @@ namespace StansAssets.PackageManager.Editor
                 $"{PackageManagerConfig.ControlsPath}/ListViewMich/ListViewMich");
         }
 
-        public ListView ListView => this.Q<ListView>();
-        public Button AddButton => this.Q<Button>("add-item");
-        public Button RemoveButton => this.Q<Button>("remove-item");
+        internal ListView ListView => this.Q<ListView>();
+        internal Button AddButton => this.Q<Button>("add-item");
+        internal Button RemoveButton => this.Q<Button>("remove-item");
     }
 }
+
+#endif

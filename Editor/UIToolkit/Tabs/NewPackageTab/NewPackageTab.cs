@@ -11,7 +11,7 @@ namespace StansAssets.PackageManager.Editor
 
         VisualElement m_TemplateVisualElement;
 
-        public NewPackageTab(PackConfiguration packConfiguration) 
+        internal NewPackageTab(PackConfiguration packConfiguration)
             : base($"{PackageManagerConfig.WindowTabsPath}/NewPackageTab/NewPackageTab")
         {
             m_PackConfiguration = packConfiguration;
@@ -45,7 +45,7 @@ namespace StansAssets.PackageManager.Editor
             resetButton.clicked += () => { RebindData(root, packageData); };
         }
 
-        void BindNaming(VisualElement root, PackageData package)
+        static void BindNaming(VisualElement root, PackageData package)
         {
             var nameValue = root.Q<TextField>("name-value");
             nameValue.RegisterValueChangedCallback(v =>
@@ -58,7 +58,7 @@ namespace StansAssets.PackageManager.Editor
             displayNameValue.RegisterValueChangedCallback(v => { package.DisplayName = v.newValue; });
         }
 
-        void UpdatePreview(VisualElement root, string newName, NamingConvention namingConvention)
+        static void UpdatePreview(VisualElement root, string newName, NamingConvention namingConvention)
         {
             var namingPreview = root.Q<TextField>("name-preview");
             var value = NameConventionBuilder.BuildName(newName, namingConvention);

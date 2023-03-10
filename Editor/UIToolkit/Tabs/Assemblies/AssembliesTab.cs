@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_2019_4_OR_NEWER
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using StansAssets.Foundation.Editor;
@@ -14,7 +16,7 @@ namespace StansAssets.PackageManager.Editor
 {
     class AssembliesTab : BaseTab
     {
-        public AssembliesTab(AssemblyDefinitions assemblyDefinitions)
+        internal AssembliesTab(AssemblyDefinitions assemblyDefinitions)
             : base($"{PackageManagerConfig.WindowTabsPath}/Assemblies/AssembliesTab")
         {
             BindUseGuids(Root, assemblyDefinitions);
@@ -221,3 +223,5 @@ namespace StansAssets.PackageManager.Editor
         }
     }
 }
+
+#endif
