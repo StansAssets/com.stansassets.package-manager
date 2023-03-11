@@ -12,7 +12,10 @@ namespace StansAssets.PackageManager
             }
 
             var result = FormatTextByConvention(name, convention.ConventionType);
-            return $"{convention.Prefix}.{result}.{convention.Postfix}";
+            var prefix = string.IsNullOrEmpty(convention.Prefix) ? "" : $"{convention.Prefix}.";
+            var postfix = string.IsNullOrEmpty(convention.Postfix) ? "" : $".{convention.Postfix}";
+
+            return $"{prefix}{result}{postfix}";
         }
 
         static string FormatTextByConvention(string text, NameConventionType convention)
@@ -24,7 +27,7 @@ namespace StansAssets.PackageManager
                     var output = Regex
                         .Replace(text, @"\b(\w)", match => match.Value.ToUpper())
                         .Replace(" ", "");
-                    
+
                     return char.ToLower(output[0]) + output.Substring(1);
                 }
                 case NameConventionType.SnakeCase:
