@@ -92,9 +92,9 @@ namespace StansAssets.PackageManager
         {
             to.UseGuids = from.UseGuids;
 
-            to.PrecompiledAssemblies.Clear();
-            to.PrecompiledAssemblies
-                .AddRange(from.PrecompiledAssemblies);
+            to.PrecompiledReferences.Clear();
+            to.PrecompiledReferences
+                .AddRange(from.PrecompiledReferences);
 
             to.InternalVisibleToAssemblyDefinitionAssets.Clear();
             to.InternalVisibleToAssemblyDefinitionAssets

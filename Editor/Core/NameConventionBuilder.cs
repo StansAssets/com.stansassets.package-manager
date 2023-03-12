@@ -4,6 +4,14 @@ namespace StansAssets.PackageManager
 {
     static class NameConventionBuilder
     {
+        internal static string BuildAssemblyName(string name, NamingConvention convention)
+        {
+            var conventionCopy = convention.Copy();
+            conventionCopy.ConventionType = NameConventionType.PascalCase;
+
+            return BuildName(name, conventionCopy);
+        }
+
         internal static string BuildName(string name, NamingConvention convention)
         {
             if (string.IsNullOrEmpty(name))

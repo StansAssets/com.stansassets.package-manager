@@ -1,13 +1,14 @@
 ﻿using System;
+using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
     [Serializable]
     class NamingConvention
     {
-        string m_Prefix;
-        string m_Postfix;
-        NameConventionType m_ConventionType;
+        [SerializeField] string m_Prefix;
+        [SerializeField] string m_Postfix;
+        [SerializeField] NameConventionType m_ConventionType;
 
         internal string Prefix
         {
@@ -25,6 +26,16 @@ namespace StansAssets.PackageManager
         {
             get => m_ConventionType;
             set => m_ConventionType = value;
+        }
+
+        internal NamingConvention Copy()
+        {
+            return new NamingConvention()
+            {
+                ConventionType = ConventionType,
+                Postfix = Postfix,
+                Prefix = Prefix
+            };
         }
     }
 }

@@ -31,7 +31,7 @@ namespace StansAssets.PackageManager.Editor
 
             BindPrecompiledAssemblies(Root,
                 "asm-precompiled",
-                assemblyDefinitions.PrecompiledAssemblies);
+                assemblyDefinitions.PrecompiledReferences);
         }
 
         static void BindUseGuids(VisualElement root, AssemblyDefinitions assemblyDefinitions)

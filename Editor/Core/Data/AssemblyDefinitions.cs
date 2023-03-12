@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace StansAssets.PackageManager
 {
     [Serializable]
     class AssemblyDefinitions
     {
-        bool m_UseGuids;
+        [SerializeField] bool m_UseGuids;
 
-        [SerializeField] List<AssemblyDefinitionAsset> m_AssemblyDefinitionAssets 
+        [SerializeField] List<AssemblyDefinitionAsset> m_AssemblyDefinitionAssets
             = new List<AssemblyDefinitionAsset>();
 
-        [SerializeField] List<AssemblyDefinitionAsset> m_InternalVisibleToAssemblyDefinitionAssets 
+        [SerializeField] List<AssemblyDefinitionAsset> m_InternalVisibleToAssemblyDefinitionAssets
             = new List<AssemblyDefinitionAsset>();
 
-        [SerializeField] List<string> m_PrecompiledAssemblies = new List<string>();
+        [FormerlySerializedAs("m_PrecompiledAssemblies")] [SerializeField]
+        List<string> m_PrecompiledReferences = new List<string>();
 
         internal bool UseGuids
         {
@@ -29,6 +31,6 @@ namespace StansAssets.PackageManager
         internal List<AssemblyDefinitionAsset> InternalVisibleToAssemblyDefinitionAssets =>
             m_InternalVisibleToAssemblyDefinitionAssets;
 
-        internal List<string> PrecompiledAssemblies => m_PrecompiledAssemblies;
+        internal List<string> PrecompiledReferences => m_PrecompiledReferences;
     }
 }

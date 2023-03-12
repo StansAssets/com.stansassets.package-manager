@@ -1,14 +1,15 @@
 ﻿using System;
+using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
     [Serializable]
     class GeneralSpecification
     {
-        bool m_AllowUnsafeCode;
-        bool m_AutoReferenced;
-        bool m_OverrideReferences;
-        bool m_NoEngineReferences;
+        [SerializeField] bool m_AllowUnsafeCode;
+        [SerializeField] bool m_AutoReferenced;
+        [SerializeField] bool m_OverrideReferences;
+        [SerializeField] bool m_NoEngineReferences;
 
         internal bool AllowUnsafeCode
         {

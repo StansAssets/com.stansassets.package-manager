@@ -1,14 +1,15 @@
 ﻿using System;
+using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
     [Serializable]
     class FoldersSpecification
     {
-        bool m_Runtime;
-        bool m_RuntimeTests;
-        bool m_Editor;
-        bool m_EditorTests;
+        [SerializeField] bool m_Runtime;
+        [SerializeField] bool m_RuntimeTests;
+        [SerializeField] bool m_Editor;
+        [SerializeField] bool m_EditorTests;
 
         internal bool Runtime
         {
@@ -32,6 +33,17 @@ namespace StansAssets.PackageManager
         {
             get => m_EditorTests;
             set => m_EditorTests = value;
+        }
+
+        internal FoldersSpecification Copy()
+        {
+            return new FoldersSpecification
+            {
+                Runtime = Runtime,
+                RuntimeTests = RuntimeTests,
+                Editor = Editor,
+                EditorTests = EditorTests,
+            };
         }
     }
 }

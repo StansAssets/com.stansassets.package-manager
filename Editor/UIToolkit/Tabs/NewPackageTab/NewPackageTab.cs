@@ -15,54 +15,60 @@ namespace StansAssets.PackageManager.Editor
             : base($"{PackageManagerConfig.WindowTabsPath}/NewPackageTab/NewPackageTab")
         {
             m_PackConfiguration = packConfiguration;
-            var packageData = new PackageData(m_PackConfiguration.Copy());
 
-            BindData(Root, packageData);
+            var newPackageInfo = new NewPackageInfo(m_PackConfiguration.Copy());
+
+            BindData(Root, newPackageInfo);
+
+            var resetButton = Root.Q<Button>("create-button");
+            resetButton.clicked += () => { PackageBuilder.BuildPackage(newPackageInfo); };
         }
 
-        void BindData(VisualElement root, PackageData packageData)
+        void BindData(VisualElement root, NewPackageInfo packageInfo)
         {
             m_TemplateVisualElement = new VisualElement();
-            _ = new PackageTemplate(m_TemplateVisualElement, packageData.Configuration);
+            _ = new PackageTemplate(m_TemplateVisualElement, packageInfo.Configuration);
             root.Q<VisualElement>("template-container").Add(m_TemplateVisualElement);
 
-            BindToolbar(root, packageData);
-            BindNaming(root, packageData);
-            UpdatePreview(root, packageData.Name, packageData.Configuration.NamingConvention);
+            BindToolbar(root, packageInfo);
+            BindNaming(root, packageInfo);
+            UpdatePreview(root, packageInfo.Package.Name, packageInfo);
         }
 
-        void RebindData(VisualElement root, PackageData packageData)
+        void RebindData(VisualElement root, NewPackageInfo packageInfo)
         {
-            m_PackConfiguration.CopyTo(packageData.Configuration);
+            m_PackConfiguration.CopyTo(packageInfo.Configuration);
 
             root.Q<VisualElement>("template-container").Remove(m_TemplateVisualElement);
-            BindData(root, packageData);
+            BindData(root, packageInfo);
         }
 
-        void BindToolbar(VisualElement root, PackageData packageData)
+        void BindToolbar(VisualElement root, NewPackageInfo packageInfo)
         {
             var resetButton = root.Q<Button>("reset-button");
-            resetButton.clicked += () => { RebindData(root, packageData); };
+            resetButton.clicked += () => { RebindData(root, packageInfo); };
         }
 
-        static void BindNaming(VisualElement root, PackageData package)
+        static void BindNaming(VisualElement root, NewPackageInfo packageInfo)
         {
+            var package = packageInfo.Package;
+
             var nameValue = root.Q<TextField>("name-value");
-            nameValue.RegisterValueChangedCallback(v =>
-            {
-                package.Name = v.newValue;
-                UpdatePreview(root, v.newValue, package.Configuration.NamingConvention);
-            });
+            nameValue.RegisterValueChangedCallback(v => { UpdatePreview(root, v.newValue, packageInfo); });
 
             var displayNameValue = root.Q<TextField>("display-name-value");
             displayNameValue.RegisterValueChangedCallback(v => { package.DisplayName = v.newValue; });
         }
 
-        static void UpdatePreview(VisualElement root, string newName, NamingConvention namingConvention)
+        static void UpdatePreview(VisualElement root, string newName, NewPackageInfo packageInfo)
         {
-            var namingPreview = root.Q<TextField>("name-preview");
-            var value = NameConventionBuilder.BuildName(newName, namingConvention);
-            namingPreview.SetValueWithoutNotify(value);
+            packageInfo.Package.Name = NameConventionBuilder.BuildName(newName, packageInfo.Configuration.NamingConvention);
+            root.Q<TextField>("name-preview").SetValueWithoutNotify(packageInfo.Package.Name);
+
+            packageInfo.BaseName = newName;
+            var assemblyName = NameConventionBuilder
+                .BuildAssemblyName(newName, packageInfo.Configuration.NamingConvention);
+            root.Q<TextField>("assembly-preview").SetValueWithoutNotify(assemblyName);
         }
     }
 }
