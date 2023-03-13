@@ -171,7 +171,7 @@ namespace StansAssets.PackageManager
         /// Note: A package that isn’t compatible with Unity doesn't appear in the Package Manager window.
         /// </summary>
         [JsonProperty("unity")]
-        internal string Unity { get; set; } = "2019.4";
+        internal string Unity { get; set; } = "";
 
         /// <summary>
         /// The author of the package.
