@@ -20,7 +20,6 @@ namespace StansAssets.PackageManager
                 CreateFolders(packageInfo);
                 CreateAssemblyDefinitions(packageInfo);
                 CreatePackageJson(packageInfo);
-                AddToProjectDependencies(packageInfo);
             }
             catch (Exception e)
             {
@@ -30,10 +29,9 @@ namespace StansAssets.PackageManager
             finally
             {
                 EditorApplication.UnlockReloadAssemblies();
-                EditorApplication.update();
             }
-
-            EditorApplication.update();
+            
+            EditorApplication.ExecuteMenuItem("Assets/Refresh");
         }
 
         static void Verification(NewPackageInfo packageInfo)
@@ -53,7 +51,7 @@ namespace StansAssets.PackageManager
 
         static void CreateFolders(NewPackageInfo packageInfo)
         {
-            var path = packageInfo.Package.Name;
+            var path = $"Packages/{packageInfo.Package.Name}";
 
             Directory.CreateDirectory(path);
 
@@ -82,8 +80,8 @@ namespace StansAssets.PackageManager
 
         static void CreateAssemblyDefinitions(NewPackageInfo packageInfo)
         {
-            var path = packageInfo.Package.Name;
-            
+            var path = $"Packages/{packageInfo.Package.Name}";
+
             var editor = packageInfo.EditorAssemblyDefinition;
             if (editor != null)
             {
@@ -119,18 +117,10 @@ namespace StansAssets.PackageManager
 
         static void CreatePackageJson(NewPackageInfo packageInfo)
         {
-            var path = packageInfo.Package.Name;
+            var path = $"Packages/{packageInfo.Package.Name}";
             var json = JsonConvert.SerializeObject(packageInfo.Package, Formatting.Indented);
 
             File.WriteAllText($"{path}/package.json", json, Encoding.UTF8);
-        }
-
-        static void AddToProjectDependencies(NewPackageInfo packageInfo)
-        {
-            var manifest = new Manifest();
-            manifest.Fetch();
-            manifest.SetDependency(packageInfo.Package.Name, $"file:../{packageInfo.Package.Name}");
-            manifest.ApplyChanges();
         }
     }
 }
