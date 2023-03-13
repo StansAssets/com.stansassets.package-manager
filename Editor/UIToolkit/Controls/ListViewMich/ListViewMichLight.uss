@@ -6,3 +6,9 @@
     background-color: #d5d5d5;
     border-color: rgb(141, 141, 141);
  }
+
+.list-mich-header{
+    background-color: #b5b6b6;
+    border-color: #d5d5d5;
+    border-bottom-color: #6e6e6e;
+}

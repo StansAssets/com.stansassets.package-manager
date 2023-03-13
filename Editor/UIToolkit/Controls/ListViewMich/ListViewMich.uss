@@ -12,3 +12,8 @@
 .action-button{
     -unity-font-style: bold;
 }
+
+.list-mich-header{
+    padding-left: 10px;
+    border-width: 1px;
+}
