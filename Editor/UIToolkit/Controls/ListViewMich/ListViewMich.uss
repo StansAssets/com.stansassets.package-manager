@@ -6,6 +6,7 @@
 
 .mich-container{
     border-width: 1px;
+    margin-right: 4px;
 }
 
 .action-button{
