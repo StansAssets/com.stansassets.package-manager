@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="item-border" style="flex-grow: 0; flex-direction: row; align-items: center; padding-left: 6px; padding-right: 4px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 1px; height: 22px;">
+        <ui:TextField picking-mode="Ignore" name="package-name" style="flex-grow: 1; flex-shrink: 1;" />
+        <ui:TextField picking-mode="Ignore" name="package-version" style="flex-grow: 1; flex-shrink: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

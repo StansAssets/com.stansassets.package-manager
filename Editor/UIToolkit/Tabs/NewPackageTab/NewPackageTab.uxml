@@ -1,17 +1,31 @@
-﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:VisualElement style="flex-direction: row; justify-content: flex-end;">
-        <ui:Button text="Reset" tooltip="Reset to Configuration" name="reset-button" style="width: 60px;" />
-    </ui:VisualElement>
-    <StansAssets.Foundation.UIElements.SettingsBlock label="New Package" name="SettingsBlock" style="align-items: stretch; margin-bottom: 0;">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <StansAssets.Foundation.UIElements.SettingsBlock label="New Package" style="align-items: stretch; margin-bottom: 0;">
         <ui:VisualElement style="margin-top: 10px;">
             <ui:TextField picking-mode="Ignore" name="display-name-value" label="Display name" value="An example Name" style="flex-grow: 1;" />
             <ui:TextField picking-mode="Ignore" name="name-value" label="Name" value="An example Name" style="flex-grow: 1;" />
-            <ui:TextField label="Preview" name="name-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
-            <ui:TextField label="Assembly preview" name="assembly-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
+            <ui:TextField picking-mode="Ignore" label="Version" value="0.0.1" text="0.0.1" name="version-value" tooltip="0.0.1 (MAJOR.MINOR.PATCH)" />
+            <ui:VisualElement style="margin-top: 10px;">
+                <ui:TextField label="Name preview" name="name-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
+                <ui:TextField label="Assembly preview" name="assembly-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="margin-top: 10px;">
+                <ui:Label text="Brief Description" />
+                <ui:TextField picking-mode="Ignore" multiline="true" name="description-value" style="min-height: 40px;" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </StansAssets.Foundation.UIElements.SettingsBlock>
+    <StansAssets.Foundation.UIElements.SettingsBlock label="Minimal Unity Version" style="margin-bottom: 0;">
+        <ui:VisualElement>
+            <ui:TextField picking-mode="Ignore" label="Unity" name="unity-version" tooltip="2019.4" />
+            <ui:TextField picking-mode="Ignore" label="Release" name="unity-release" tooltip="40f1" />
+        </ui:VisualElement>
+    </StansAssets.Foundation.UIElements.SettingsBlock>
+    <StansAssets.Foundation.UIElements.SettingsBlock label="Dependencies">
+        <StansAssets.PackageManager.Editor.ListViewMich name="package-dependencies-list" />
+    </StansAssets.Foundation.UIElements.SettingsBlock>
     <ui:VisualElement name="template-container" style="flex-grow: 1;" />
-    <ui:VisualElement name="bottom-toolbar">
-        <ui:Button text="Create" name="create-button" />
+    <ui:VisualElement name="bottom-toolbar" style="justify-content: flex-end; align-items: center; flex-direction: row; flex-wrap: wrap; margin-top: 6px; margin-bottom: 6px; margin-right: 10px;">
+        <ui:Button text="Reset" tooltip="Reset settings to active configuration" name="reset-button" />
+        <ui:Button text="Create" name="create-button" tooltip="Create new package" style="-unity-font-style: bold;" />
     </ui:VisualElement>
 </ui:UXML>
