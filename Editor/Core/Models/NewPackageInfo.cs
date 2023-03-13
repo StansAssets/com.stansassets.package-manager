@@ -58,7 +58,7 @@ namespace StansAssets.PackageManager
             var info = FetchAssemblyDefinitionInfo(
                 $"{name}.EditorTests",
                 Configuration.General,
-                Configuration.AssemblyDefinitions.EditorAssemblies);
+                Configuration.AssemblyDefinitions.EditorTestsAssemblies);
 
             var platforms = info.IncludePlatforms.ToList();
             platforms.Add("Editor");
@@ -95,7 +95,7 @@ namespace StansAssets.PackageManager
             var info = FetchAssemblyDefinitionInfo(
                 $"{name}.RuntimeTests",
                 Configuration.General,
-                Configuration.AssemblyDefinitions.RuntimeAssemblies);
+                Configuration.AssemblyDefinitions.RuntimeTestsAssemblies);
 
             return info;
         }

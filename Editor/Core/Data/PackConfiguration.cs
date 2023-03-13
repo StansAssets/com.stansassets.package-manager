@@ -83,7 +83,9 @@ namespace StansAssets.PackageManager
             AssemblyDefinitionsSpecification to)
         {
             CopyAssemblyDefinitions(from.RuntimeAssemblies, to.RuntimeAssemblies);
+            CopyAssemblyDefinitions(from.RuntimeTestsAssemblies, to.RuntimeTestsAssemblies);
             CopyAssemblyDefinitions(from.EditorAssemblies, to.EditorAssemblies);
+            CopyAssemblyDefinitions(from.EditorTestsAssemblies, to.EditorTestsAssemblies);
         }
 
         void CopyAssemblyDefinitions(
