@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
-using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEditor.UIElements;
 using UnityEditorInternal;
@@ -187,39 +186,6 @@ namespace StansAssets.PackageManager.Editor
                 var label = e.Q<Label>(PrecompiledAssemblyItem.LabelComponent);
                 label.text = itemValue.ToString();
             };
-        }
-
-        static class AssemblyDefinitionAssetItem
-        {
-            internal static VisualTreeAsset ItemComponent => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                $"{PackageManagerConfig.ControlsPath}/" +
-                "AssemblyDefinitionAssetItem/" +
-                "AssemblyDefinitionAssetItem.uxml");
-
-            internal static string ItemComponentStyle => $"{PackageManagerConfig.ControlsPath}/" +
-                                                         "AssemblyDefinitionAssetItem/" +
-                                                         "AssemblyDefinitionAssetItem";
-
-            internal const string ValueComponent = "item-value";
-            internal const string LabelComponent = "item-label";
-            internal const string DefaultEmptyValue = "None";
-        }
-
-        static class PrecompiledAssemblyItem
-        {
-            internal static VisualTreeAsset ItemComponent => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                $"{PackageManagerConfig.ControlsPath}/" +
-                "PrecompiledAssemblyItem/" +
-                "PrecompiledAssemblyItem.uxml");
-
-            internal static string ItemComponentStyle => $"{PackageManagerConfig.ControlsPath}/" +
-                                                         "PrecompiledAssemblyItem/" +
-                                                         "PrecompiledAssemblyItem";
-
-            internal const string ValueComponent = "item-value";
-            internal const string LabelComponent = "item-label";
-            internal const string DefaultEmptyValue = "None";
-            internal const string ErrorValue = "Not found";
         }
     }
 }
