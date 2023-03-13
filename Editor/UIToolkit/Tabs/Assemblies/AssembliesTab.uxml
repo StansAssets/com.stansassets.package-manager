@@ -1,13 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
-        <StansAssets.Foundation.UIElements.SettingsBlock label="Assembly definitions references" style="flex-grow: 1;">
+        <StansAssets.Foundation.UIElements.SettingsBlock label="Assembly Definition References" style="flex-grow: 1;">
             <ui:Toggle label="Use GUIDs" name="asd-references-use-guids" />
             <StansAssets.PackageManager.Editor.ListViewMich name="asm-references" />
         </StansAssets.Foundation.UIElements.SettingsBlock>
-        <StansAssets.Foundation.UIElements.SettingsBlock label="Assembly references" style="flex-grow: 1;">
+        <StansAssets.Foundation.UIElements.SettingsBlock label="Assembly References" style="flex-grow: 1;">
             <StansAssets.PackageManager.Editor.ListViewMich name="asm-precompiled" />
         </StansAssets.Foundation.UIElements.SettingsBlock>
-        <StansAssets.Foundation.UIElements.SettingsBlock label="Internal Visible To Assembly definitions references" style="flex-grow: 1;">
+        <StansAssets.Foundation.UIElements.SettingsBlock label="Internal visible to" tooltip="Which assemblies should have internal access to your package? (&quot;Tests&quot; will be added by default)" style="flex-grow: 1;">
             <StansAssets.PackageManager.Editor.ListViewMich name="internal-asm-references" />
         </StansAssets.Foundation.UIElements.SettingsBlock>
     </ui:VisualElement>
