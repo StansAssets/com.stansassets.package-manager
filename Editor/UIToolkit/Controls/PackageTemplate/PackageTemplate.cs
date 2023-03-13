@@ -17,8 +17,11 @@ namespace StansAssets.PackageManager.Editor
             var assemblies = packConfiguration.AssemblyDefinitions;
             var assembliesTabs = new TabControl(root);
 
-            assembliesTabs.AddTab("runtime", "Runtime", new AssembliesTab(assemblies.RuntimeAssemblies));
-            assembliesTabs.AddTab("editor", "Editor", new AssembliesTab(assemblies.EditorAssemblies));
+            assembliesTabs.AddTab("runtime", "▪ Runtime", new AssembliesTab(assemblies.RuntimeAssemblies));
+            assembliesTabs.AddTab("runtime-tests", "▪ Runtime tests", new AssembliesTab(assemblies.RuntimeTestsAssemblies));
+            
+            assembliesTabs.AddTab("editor", "▪ Editor", new AssembliesTab(assemblies.EditorAssemblies));
+            assembliesTabs.AddTab("editor-tests", "▪ Editor tests", new AssembliesTab(assemblies.EditorTestsAssemblies));
 
             assembliesTabs.ActivateTab("runtime");
         }
