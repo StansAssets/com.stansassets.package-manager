@@ -85,6 +85,11 @@ namespace StansAssets.PackageManager.Editor
         {
             var dependencies = new List<(string name, string version)>();
             var listViewMich = root.Q<ListViewMich>("package-dependencies-list");
+            listViewMich.InitHeader(new[]
+            {
+                new HeaderColumn("Package name", 64f),
+                new HeaderColumn("Version", 36f),
+            });
 
             listViewMich.AddButton.clicked += () =>
             {
