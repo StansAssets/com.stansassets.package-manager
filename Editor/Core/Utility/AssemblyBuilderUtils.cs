@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 using AssemblyBuilder = System.Reflection.Emit.AssemblyBuilder;
 
-namespace StansAssets.PackageManager.Editor
+namespace StansAssets.PackageManager
 {
     static class AssemblyBuilderUtils
     {
@@ -21,6 +23,20 @@ namespace StansAssets.PackageManager.Editor
             }
 
             return enumBuilder.CreateType();
+        }
+
+        internal static void BuildAssemblyInfo(string path, IEnumerable<string> internalVisibleAssemblies)
+        {
+            using (var writer = new StreamWriter($"{path}/AssemblyInfo.cs"))
+            {
+                writer.WriteLine("using System.Runtime.CompilerServices;");
+                writer.WriteLine("");
+
+                foreach (var assembly in internalVisibleAssemblies)
+                {
+                    writer.WriteLine("[assembly: InternalsVisibleTo(\"{0}\")]", assembly);
+                }
+            }
         }
     }
 }

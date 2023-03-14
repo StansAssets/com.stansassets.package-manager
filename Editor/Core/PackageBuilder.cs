@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
@@ -18,6 +19,7 @@ namespace StansAssets.PackageManager
             {
                 CreateFolders(packageInfo);
                 CreateAssemblyDefinitions(packageInfo);
+                CreateAssembliesInfo(packageInfo);
                 CreatePackageJson(packageInfo);
             }
             catch (Exception e)
@@ -103,6 +105,60 @@ namespace StansAssets.PackageManager
                 {
                     WriteAssembly($"{path}/Tests/Runtime", runtimeTests.Name, runtimeTests);
                 }
+            }
+        }
+
+        static void CreateAssembliesInfo(NewPackageInfo packageInfo)
+        {
+            var folders = packageInfo.Configuration.Folders;
+            var path = $"Packages/{packageInfo.Package.Name}";
+
+            if (folders.Editor)
+            {
+                var assemblies = packageInfo.Configuration.AssemblyDefinitions.EditorAssemblies
+                    .InternalVisibleToAssemblyDefinitionAssets.Select(a => a.name).ToList();
+
+                if (folders.EditorTests)
+                {
+                    // Add internal visible to tests assembly
+                    var testsName = packageInfo.EditorTestsAssemblyDefinition.Name;
+                    assemblies.Add(testsName);
+
+                    // Tests
+                    var testsAssemblies = packageInfo.Configuration.AssemblyDefinitions.EditorTestsAssemblies
+                        .InternalVisibleToAssemblyDefinitionAssets.Select(a => a.name).ToList();
+
+                    if (testsAssemblies.Any())
+                    {
+                        AssemblyBuilderUtils.BuildAssemblyInfo($"{path}/Tests/Editor", testsAssemblies);
+                    }
+                }
+
+                AssemblyBuilderUtils.BuildAssemblyInfo($"{path}/Editor", assemblies);
+            }
+
+            if (folders.Runtime)
+            {
+                var assemblies = packageInfo.Configuration.AssemblyDefinitions.RuntimeAssemblies
+                    .InternalVisibleToAssemblyDefinitionAssets.Select(a => a.name).ToList();
+
+                if (folders.RuntimeTests)
+                {
+                    // Add internal visible to tests assembly
+                    var testsName = packageInfo.RuntimeTestsAssemblyDefinition.Name;
+                    assemblies.Add(testsName);
+
+                    // Tests
+                    var testsAssemblies = packageInfo.Configuration.AssemblyDefinitions.RuntimeTestsAssemblies
+                        .InternalVisibleToAssemblyDefinitionAssets.Select(a => a.name).ToList();
+                    
+                    if (testsAssemblies.Any())
+                    {
+                        AssemblyBuilderUtils.BuildAssemblyInfo($"{path}/Tests/Runtime", testsAssemblies);
+                    }
+                }
+
+                AssemblyBuilderUtils.BuildAssemblyInfo($"{path}/Runtime", assemblies);
             }
         }
 
