@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
+using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
     static class PackageBuilder
     {
-        internal static void BuildPackage(NewPackageInfo packageInfo)
+        internal static void BuildPackage(NewPackageInfo packageInfo, out bool successful)
         {
             Verification(packageInfo);
 
@@ -24,6 +25,7 @@ namespace StansAssets.PackageManager
             }
             catch (Exception e)
             {
+                successful = false;
                 Console.WriteLine(e);
                 throw;
             }
@@ -31,7 +33,10 @@ namespace StansAssets.PackageManager
             {
                 EditorApplication.UnlockReloadAssemblies();
             }
-            
+
+            successful = true;
+            Debug.Log($"Package created: {packageInfo.Package.Name}");
+
             EditorApplication.ExecuteMenuItem("Assets/Refresh");
         }
 
@@ -151,7 +156,7 @@ namespace StansAssets.PackageManager
                     // Tests
                     var testsAssemblies = packageInfo.Configuration.AssemblyDefinitions.RuntimeTestsAssemblies
                         .InternalVisibleToAssemblyDefinitionAssets.Select(a => a.name).ToList();
-                    
+
                     if (testsAssemblies.Any())
                     {
                         AssemblyBuilderUtils.BuildAssemblyInfo($"{path}/Tests/Runtime", testsAssemblies);

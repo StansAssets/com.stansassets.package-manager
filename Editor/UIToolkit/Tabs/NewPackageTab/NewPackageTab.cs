@@ -1,5 +1,6 @@
 ﻿#if UNITY_2019_4_OR_NEWER
 
+using System;
 using System.Collections.Generic;
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
@@ -9,6 +10,9 @@ namespace StansAssets.PackageManager.Editor
 {
     class NewPackageTab : BaseTab
     {
+        internal event Action<NewPackageInfo, bool> NewPackageCreated;
+        internal event Action NewPackageCanceled;
+
         readonly PackConfiguration m_PackConfiguration;
 
         VisualElement m_TemplateVisualElement;
@@ -17,13 +21,26 @@ namespace StansAssets.PackageManager.Editor
             : base($"{PackageManagerConfig.WindowTabsPath}/NewPackageTab/NewPackageTab")
         {
             m_PackConfiguration = packConfiguration;
+            var packageInfo = new NewPackageInfo(m_PackConfiguration.Copy());
 
-            var newPackageInfo = new NewPackageInfo(m_PackConfiguration.Copy());
+            BindData(Root, packageInfo);
+            BindButtons(Root, packageInfo);
+        }
 
-            BindData(Root, newPackageInfo);
+        void BindButtons(VisualElement root, NewPackageInfo packageInfo)
+        {
+            var createButton = root.Q<Button>("create-button");
+            createButton.clicked += () =>
+            {
+                PackageBuilder.BuildPackage(packageInfo, out var successful);
+                NewPackageCreated?.Invoke(packageInfo, successful);
+            };
 
-            var resetButton = Root.Q<Button>("create-button");
-            resetButton.clicked += () => { PackageBuilder.BuildPackage(newPackageInfo); };
+            var cancelButton = root.Q<Button>("cancel-button");
+            cancelButton.clicked += () => { NewPackageCanceled?.Invoke(); };
+
+            var resetButton = root.Q<Button>("reset-button");
+            resetButton.clicked += () => { RebindData(root, packageInfo); };
         }
 
         void BindData(VisualElement root, NewPackageInfo packageInfo)
@@ -32,7 +49,6 @@ namespace StansAssets.PackageManager.Editor
             _ = new PackageTemplate(m_TemplateVisualElement, packageInfo.Configuration);
             root.Q<VisualElement>("template-container").Add(m_TemplateVisualElement);
 
-            BindToolbar(root, packageInfo);
             BindNaming(root, packageInfo);
             BindVersions(root, packageInfo);
             BindDependencies(root, packageInfo);
@@ -44,12 +60,6 @@ namespace StansAssets.PackageManager.Editor
 
             root.Q<VisualElement>("template-container").Remove(m_TemplateVisualElement);
             BindData(root, packageInfo);
-        }
-
-        void BindToolbar(VisualElement root, NewPackageInfo packageInfo)
-        {
-            var resetButton = root.Q<Button>("reset-button");
-            resetButton.clicked += () => { RebindData(root, packageInfo); };
         }
 
         static void BindNaming(VisualElement root, NewPackageInfo packageInfo)

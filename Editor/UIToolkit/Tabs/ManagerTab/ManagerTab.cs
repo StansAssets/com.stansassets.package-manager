@@ -1,6 +1,7 @@
 ﻿#if UNITY_2019_4_OR_NEWER
 
 using StansAssets.Plugins.Editor;
+using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
 {
@@ -9,13 +10,10 @@ namespace StansAssets.PackageManager.Editor
         internal ManagerTab()
             : base($"{PackageManagerConfig.WindowTabsPath}/ManagerTab/ManagerTab")
         {
-            var conf = PackConfigurationSettings.Instance.ActiveConfiguration;
-            var assembliesTabs = new TabControl(Root);
-          
-            assembliesTabs.AddTab("settings", "Settings", new SettingsTab());
-            assembliesTabs.AddTab("new-package", "New Package", new NewPackageTab(conf));
-            
-            assembliesTabs.ActivateTab("settings");
+            Root.Q<Button>("create-package-button").clicked += () =>
+            {
+                CreateNewPackageWindow.ShowTowardsInspector();
+            };
         }
     }
 }

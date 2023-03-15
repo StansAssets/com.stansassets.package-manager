@@ -1,10 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:VisualElement class="tabs-root">
-        <ui:VisualElement class="tabs-bar">
-            <ui:VisualElement class="toolbar__flexible-space" />
-            <StansAssets.Foundation.UIElements.ButtonStrip name="tabs" view-data-key="header-tabs" />
-            <ui:VisualElement class="toolbar__flexible-space" />
-        </ui:VisualElement>
-        <ui:ScrollView name="tabs-container" view-data-key="tabs-container-scroll" class="tabs-container" style="border-top-width: 1px;" />
+    <ui:VisualElement style="align-items: flex-end;">
+        <ui:Button text="Create new package" name="create-package-button" />
     </ui:VisualElement>
 </ui:UXML>
