@@ -71,8 +71,8 @@ namespace StansAssets.PackageManager
             to.General.AllowUnsafeCode = General.AllowUnsafeCode;
             to.General.NoEngineReferences = General.NoEngineReferences;
 
-            to.NamingConvention.Prefix = NamingConvention.Prefix;
-            to.NamingConvention.Postfix = NamingConvention.Postfix;
+            to.NamingConvention.DisplayPrefix = NamingConvention.DisplayPrefix;
+            to.NamingConvention.NamePrefix = NamingConvention.NamePrefix;
             to.NamingConvention.ConventionType = NamingConvention.ConventionType;
 
             CopyAssemblyDefinitionsSpecification(AssemblyDefinitions, to.AssemblyDefinitions);

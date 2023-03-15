@@ -6,20 +6,20 @@ namespace StansAssets.PackageManager
     [Serializable]
     class NamingConvention
     {
-        [SerializeField] string m_Prefix;
-        [SerializeField] string m_Postfix;
+        [SerializeField] string m_DisplayPrefix;
+        [SerializeField] string m_NamePrefix;
         [SerializeField] NameConventionType m_ConventionType;
 
-        internal string Prefix
+        internal string DisplayPrefix
         {
-            get => m_Prefix;
-            set => m_Prefix = value;
+            get => m_DisplayPrefix;
+            set => m_DisplayPrefix = value;
         }
 
-        internal string Postfix
+        internal string NamePrefix
         {
-            get => m_Postfix;
-            set => m_Postfix = value;
+            get => m_NamePrefix;
+            set => m_NamePrefix = value;
         }
 
         internal NameConventionType ConventionType
@@ -33,8 +33,8 @@ namespace StansAssets.PackageManager
             return new NamingConvention()
             {
                 ConventionType = ConventionType,
-                Postfix = Postfix,
-                Prefix = Prefix
+                NamePrefix = NamePrefix,
+                DisplayPrefix = DisplayPrefix
             };
         }
     }

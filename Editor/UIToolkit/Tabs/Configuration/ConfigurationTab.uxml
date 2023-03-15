@@ -1,11 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <StansAssets.Foundation.UIElements.SettingsBlock label="Naming convention" name="SettingsBlock" style="align-items: stretch; margin-bottom: 0;">
-        <ui:TextField picking-mode="Ignore" label="Prefix" name="prefix" />
-        <ui:TextField picking-mode="Ignore" label="Postfix" name="postfix" />
-        <uie:EnumField label="Convention" name="name-convention" type="StansAssets.PackageManager.NameConventionType, StansAssets.PackageManager.Editor" />
-        <ui:VisualElement style="margin-top: 10px;">
-            <ui:TextField picking-mode="Ignore" name="naming-preview-value" text="An example Name" label="Try a name" value="An example Name" style="flex-grow: 1;" />
-            <ui:TextField label="Preview" name="naming-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
-        </ui:VisualElement>
+        <ui:TextField picking-mode="Ignore" label="Display Prefix" name="display-prefix" />
+        <ui:TextField picking-mode="Ignore" label="Name Prefix" name="name-prefix" />
     </StansAssets.Foundation.UIElements.SettingsBlock>
 </ui:UXML>

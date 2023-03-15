@@ -1,6 +1,5 @@
 ﻿#if UNITY_2019_4_OR_NEWER
 using StansAssets.Plugins.Editor;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
@@ -14,47 +13,23 @@ namespace StansAssets.PackageManager.Editor
 
             _ = new PackageTemplate(Root, conf);
             BindNamingConvention(Root, conf.NamingConvention);
-
-            UpdatePreview(Root, conf.NamingConvention);
         }
 
         static void BindNamingConvention(VisualElement root, NamingConvention namingConvention)
         {
-            var prefix = root.Q<TextField>("prefix");
-            prefix.SetValueWithoutNotify(namingConvention.Prefix);
-            prefix.RegisterValueChangedCallback(v =>
+            var displayPrefix = root.Q<TextField>("display-prefix");
+            displayPrefix.SetValueWithoutNotify(namingConvention.DisplayPrefix);
+            displayPrefix.RegisterValueChangedCallback(v =>
             {
-                namingConvention.Prefix = v.newValue;
-                UpdatePreview(root, namingConvention);
+                namingConvention.DisplayPrefix = v.newValue;
             });
 
-            var postfix = root.Q<TextField>("postfix");
-            postfix.SetValueWithoutNotify(namingConvention.Postfix);
-            postfix.RegisterValueChangedCallback(v =>
+            var namePrefix = root.Q<TextField>("name-prefix");
+            namePrefix.SetValueWithoutNotify(namingConvention.NamePrefix);
+            namePrefix.RegisterValueChangedCallback(v =>
             {
-                namingConvention.Postfix = v.newValue;
-                UpdatePreview(root, namingConvention);
+                namingConvention.NamePrefix = v.newValue;
             });
-
-            var nameConvention = root.Q<EnumField>("name-convention");
-            nameConvention.SetValueWithoutNotify(namingConvention.ConventionType);
-            nameConvention.RegisterValueChangedCallback(v =>
-            {
-                namingConvention.ConventionType = (NameConventionType)v.newValue;
-                UpdatePreview(root, namingConvention);
-            });
-
-            var namingPreview = root.Q<TextField>("naming-preview-value");
-            namingPreview.RegisterValueChangedCallback(evt => UpdatePreview(root, namingConvention));
-        }
-
-        static void UpdatePreview(VisualElement root, NamingConvention namingConvention)
-        {
-            var namingPreview = root.Q<TextField>("naming-preview");
-            var namingPreviewValue = root.Q<TextField>("naming-preview-value");
-
-            var name = NameConventionBuilder.BuildName(namingPreviewValue.value, namingConvention);
-            namingPreview.SetValueWithoutNotify(name);
         }
     }
 }

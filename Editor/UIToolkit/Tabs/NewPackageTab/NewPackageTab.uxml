@@ -1,16 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <StansAssets.Foundation.UIElements.SettingsBlock label="New Package" style="align-items: stretch; margin-bottom: 0;">
         <ui:VisualElement style="margin-top: 10px;">
-            <ui:TextField picking-mode="Ignore" name="display-name-value" label="Display name" value="An example Name" style="flex-grow: 1;" />
-            <ui:TextField picking-mode="Ignore" name="name-value" label="Name" value="An example Name" style="flex-grow: 1;" />
+            <ui:TextField picking-mode="Ignore" name="display-name" label="Display name" style="flex-grow: 1;" />
+            <ui:TextField picking-mode="Ignore" name="package-name" label="Package Name" style="flex-grow: 1;" />
+            <ui:TextField picking-mode="Ignore" name="assembly-name" label="Assembly Name" style="flex-grow: 1;" />
             <ui:TextField picking-mode="Ignore" label="Version" value="0.0.1" text="0.0.1" name="version-value" tooltip="0.0.1 (MAJOR.MINOR.PATCH)" />
             <ui:VisualElement style="margin-top: 10px;">
-                <ui:TextField label="Name preview" name="name-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
-                <ui:TextField label="Assembly preview" name="assembly-preview" readonly="true" style="opacity: 0.7; flex-grow: 1;" />
-            </ui:VisualElement>
-            <ui:VisualElement style="margin-top: 10px;">
                 <ui:Label text="Brief Description" />
-                <ui:TextField picking-mode="Ignore" multiline="true" name="description-value" style="min-height: 40px;" />
+                <ui:TextField picking-mode="Ignore" multiline="true" name="package-description" style="min-height: 40px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </StansAssets.Foundation.UIElements.SettingsBlock>

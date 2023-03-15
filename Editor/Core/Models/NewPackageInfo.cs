@@ -7,8 +7,8 @@ namespace StansAssets.PackageManager
 {
     class NewPackageInfo
     {
-        internal string BaseName { get; set; }
-
+        internal string AssemblyName { get; set; }
+        
         internal PackConfiguration Configuration { get; }
 
         internal PackageJson Package { get; } = new PackageJson();
@@ -33,7 +33,7 @@ namespace StansAssets.PackageManager
                 return null;
             }
 
-            var name = NameConventionBuilder.BuildAssemblyName(BaseName, Configuration.NamingConvention);
+            var name = NameConventionBuilder.BuildAssemblyName(AssemblyName, Configuration.NamingConvention);
             var info = FetchAssemblyDefinitionInfo(
                 $"{name}.Editor",
                 Configuration.General,
@@ -54,7 +54,7 @@ namespace StansAssets.PackageManager
                 return null;
             }
 
-            var name = NameConventionBuilder.BuildAssemblyName(BaseName, Configuration.NamingConvention);
+            var name = NameConventionBuilder.BuildAssemblyName(AssemblyName, Configuration.NamingConvention);
             var info = FetchAssemblyDefinitionInfo(
                 $"{name}.EditorTests",
                 Configuration.General,
@@ -75,7 +75,7 @@ namespace StansAssets.PackageManager
                 return null;
             }
 
-            var name = NameConventionBuilder.BuildAssemblyName(BaseName, Configuration.NamingConvention);
+            var name = NameConventionBuilder.BuildAssemblyName(AssemblyName, Configuration.NamingConvention);
             var info = FetchAssemblyDefinitionInfo(
                 $"{name}.Runtime",
                 Configuration.General,
@@ -91,7 +91,7 @@ namespace StansAssets.PackageManager
                 return null;
             }
 
-            var name = NameConventionBuilder.BuildAssemblyName(BaseName, Configuration.NamingConvention);
+            var name = NameConventionBuilder.BuildAssemblyName(AssemblyName, Configuration.NamingConvention);
             var info = FetchAssemblyDefinitionInfo(
                 $"{name}.RuntimeTests",
                 Configuration.General,
@@ -171,7 +171,7 @@ namespace StansAssets.PackageManager
         /// Note: A package that isn’t compatible with Unity doesn't appear in the Package Manager window.
         /// </summary>
         [JsonProperty("unity")]
-        internal string Unity { get; set; } = "";
+        internal string Unity { get; set; } = "2019.4";
 
         /// <summary>
         /// The author of the package.
@@ -240,7 +240,7 @@ namespace StansAssets.PackageManager
         /// Note: If you omit the recommended unity property, this property has no effect.
         /// </summary>
         [JsonProperty("unityRelease")]
-        internal string UnityRelease { get; set; } = "";
+        internal string UnityRelease { get; set; } = "40f1";
     }
 
     [Serializable]
