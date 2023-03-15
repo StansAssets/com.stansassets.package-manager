@@ -273,18 +273,6 @@ namespace StansAssets.PackageManager.Editor
                 });
             };
         }
-
-        // static void UpdatePreview(VisualElement root, string newName, NewPackageInfo packageInfo)
-        // {
-        //     packageInfo.Package.Name =
-        //         NameConventionBuilder.BuildName(newName, packageInfo.Configuration.NamingConvention);
-        //     root.Q<TextField>("name-preview").SetValueWithoutNotify(packageInfo.Package.Name);
-        //
-        //     packageInfo.BaseName = newName;
-        //     var assemblyName = NameConventionBuilder
-        //         .BuildAssemblyName(newName, packageInfo.Configuration.NamingConvention);
-        //     root.Q<TextField>("assembly-preview").SetValueWithoutNotify(assemblyName);
-        // }
     }
 }
 
