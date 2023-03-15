@@ -159,14 +159,17 @@ namespace StansAssets.PackageManager.Editor
         static void BindVersions(VisualElement root, NewPackageInfo packageInfo)
         {
             var package = packageInfo.Package;
+            var unityVersion = packageInfo.Configuration.UnityVersion;
 
             var versionValue = root.Q<TextField>("version-value");
             versionValue.RegisterValueChangedCallback(v => { package.Version = v.newValue; });
 
             var unityVersionValue = root.Q<TextField>("unity-version");
+            unityVersionValue.SetValueWithoutNotify(unityVersion.Unity);
             unityVersionValue.RegisterValueChangedCallback(v => { package.Unity = v.newValue; });
 
             var unityReleaseValue = root.Q<TextField>("unity-release");
+            unityReleaseValue.SetValueWithoutNotify(unityVersion.UnityRelease);
             unityReleaseValue.RegisterValueChangedCallback(v => { package.UnityRelease = v.newValue; });
         }
 

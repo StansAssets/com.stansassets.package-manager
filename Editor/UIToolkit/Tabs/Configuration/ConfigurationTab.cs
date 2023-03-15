@@ -13,6 +13,7 @@ namespace StansAssets.PackageManager.Editor
 
             _ = new PackageTemplate(Root, conf);
             BindNamingConvention(Root, conf.NamingConvention);
+            BindMinimalUnityVersion(Root, conf.UnityVersion);
         }
 
         static void BindNamingConvention(VisualElement root, NamingConvention namingConvention)
@@ -30,6 +31,18 @@ namespace StansAssets.PackageManager.Editor
             {
                 namingConvention.NamePrefix = v.newValue;
             });
+        }
+        
+        
+        void BindMinimalUnityVersion(VisualElement root, MinimalUnityVersion unityVersion)
+        {
+            var unityVersionValue = root.Q<TextField>("unity-version");
+            unityVersionValue.SetValueWithoutNotify(unityVersion.Unity);
+            unityVersionValue.RegisterValueChangedCallback(v => { unityVersion.Unity = v.newValue; });
+
+            var unityReleaseValue = root.Q<TextField>("unity-release");
+            unityReleaseValue.SetValueWithoutNotify(unityVersion.UnityRelease);
+            unityReleaseValue.RegisterValueChangedCallback(v => { unityVersion.UnityRelease = v.newValue; });
         }
     }
 }

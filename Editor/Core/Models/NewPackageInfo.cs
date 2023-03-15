@@ -171,7 +171,7 @@ namespace StansAssets.PackageManager
         /// Note: A package that isn’t compatible with Unity doesn't appear in the Package Manager window.
         /// </summary>
         [JsonProperty("unity")]
-        internal string Unity { get; set; } = "2019.4";
+        internal string Unity { get; set; } = "";
 
         /// <summary>
         /// The author of the package.
@@ -240,7 +240,7 @@ namespace StansAssets.PackageManager
         /// Note: If you omit the recommended unity property, this property has no effect.
         /// </summary>
         [JsonProperty("unityRelease")]
-        internal string UnityRelease { get; set; } = "40f1";
+        internal string UnityRelease { get; set; } = "";
     }
 
     [Serializable]

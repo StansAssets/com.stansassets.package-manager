@@ -3,4 +3,10 @@
         <ui:TextField picking-mode="Ignore" label="Display Prefix" name="display-prefix" />
         <ui:TextField picking-mode="Ignore" label="Name Prefix" name="name-prefix" />
     </StansAssets.Foundation.UIElements.SettingsBlock>
+    <StansAssets.Foundation.UIElements.SettingsBlock label="Minimal Unity Version" style="margin-bottom: 0;">
+        <ui:VisualElement>
+            <ui:TextField picking-mode="Ignore" label="Unity" name="unity-version" tooltip="2019.4" />
+            <ui:TextField picking-mode="Ignore" label="Release" name="unity-release" tooltip="40f1" />
+        </ui:VisualElement>
+    </StansAssets.Foundation.UIElements.SettingsBlock>
 </ui:UXML>

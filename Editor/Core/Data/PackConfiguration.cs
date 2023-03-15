@@ -19,6 +19,8 @@ namespace StansAssets.PackageManager
         [SerializeField] AssemblyDefinitionsSpecification m_AssemblyDefinitions
             = new AssemblyDefinitionsSpecification();
 
+        [SerializeField] MinimalUnityVersion m_MinimalUnityVersion = new MinimalUnityVersion();
+
         internal PackConfiguration()
         {
             m_Guid = System.Guid.NewGuid().ToString();
@@ -39,6 +41,8 @@ namespace StansAssets.PackageManager
         internal GeneralSpecification General => m_GeneralSpecification;
 
         internal AssemblyDefinitionsSpecification AssemblyDefinitions => m_AssemblyDefinitions;
+
+        internal MinimalUnityVersion UnityVersion => m_MinimalUnityVersion;
 
         /// <summary>
         /// Return a copy of this object
@@ -74,6 +78,9 @@ namespace StansAssets.PackageManager
             to.NamingConvention.DisplayPrefix = NamingConvention.DisplayPrefix;
             to.NamingConvention.NamePrefix = NamingConvention.NamePrefix;
             to.NamingConvention.ConventionType = NamingConvention.ConventionType;
+
+            to.UnityVersion.Unity = UnityVersion.Unity;
+            to.UnityVersion.UnityRelease = UnityVersion.UnityRelease;
 
             CopyAssemblyDefinitionsSpecification(AssemblyDefinitions, to.AssemblyDefinitions);
         }
