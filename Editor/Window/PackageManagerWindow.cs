@@ -2,6 +2,7 @@
 
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
@@ -10,7 +11,8 @@ namespace StansAssets.PackageManager.Editor
 {
     class PackageManagerWindow : PackageSettingsWindow<PackageManagerWindow>
     {
-        internal static GUIContent WindowTitle => new GUIContent(PackageManagerConfig.DisplayName);
+        internal static GUIContent WindowTitle => new GUIContent(PackageManagerConfig.DisplayName,
+            EditorGUIUtility.IconContent($"{(EditorGUIUtility.isProSkin ? "d_" : "")}Assembly Icon").image);
 
         protected override PackageInfo GetPackageInfo() =>
             PackageManagerUtility.GetPackageInfo(PackageManagerConfig.PackageName);
