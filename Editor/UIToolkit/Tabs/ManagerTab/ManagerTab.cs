@@ -7,6 +7,8 @@ using System.Linq;
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
 
+using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,6 +37,14 @@ namespace StansAssets.PackageManager.Editor
             root.Q<Button>("discard-assets-button").clicked += () =>
             {
                 PackManagerAssetSettings.Instance.PackagesList.Clear();
+
+                if (Directory.Exists(PackageBuilder.LocalPackagesCachePath))
+                {
+                    FileUtil.DeleteFileOrDirectory(PackageBuilder.LocalPackagesCachePath);
+                }
+
+                EditorApplication.ExecuteMenuItem("Assets/Refresh");
+
                 BindUnityPackages(root);
             };
 
@@ -260,7 +270,9 @@ namespace StansAssets.PackageManager.Editor
                 {
                     assetItem.PackageState = PackageAssetState.Enable;
                 }
-                else if (assetItem.PackageState == PackageAssetState.Enable && inCacheExists)
+                else if ((assetItem.PackageState == PackageAssetState.Enable
+                          || assetItem.PackageState == PackageAssetState.NotFound) 
+                         && inCacheExists)
                 {
                     assetItem.PackageState = PackageAssetState.Disable;
                 }
