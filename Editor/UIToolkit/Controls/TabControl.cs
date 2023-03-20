@@ -82,6 +82,15 @@ namespace StansAssets.PackageManager.Editor
             var tab = m_Tabs[name];
             m_TabsButtons.SetValue(tab.label);
         }
+        
+        /// <summary>
+        /// Set the flexible growth property of tabs content container
+        /// </summary>
+        /// <param name="styleFloat"></param>
+        internal void ContentContainerFlexGrow(StyleFloat styleFloat)
+        {
+            m_TabsContainer.contentContainer.style.flexGrow = styleFloat;
+        }
     }
 }
 #endif
