@@ -23,9 +23,13 @@
                 <ui:Label name="package-name-value" text="com.company.some-name" style="margin-left: 10px; -unity-font-style: bold-and-italic; -unity-text-align: upper-left; margin-bottom: 2px;" />
                 <ui:Label text="A tool for creating, configuring and managing plugins in the Unity project." name="description" class="description" />
             </ui:VisualElement>
+            <uie:Toolbar style="margin-top: 12px;">
+                <ui:Button text="Disable" name="package-activity-button" />
+            </uie:Toolbar>
         </ui:VisualElement>
     </uie:VisualSplitter>
     <uie:Toolbar style="flex-direction: row;">
+        <ui:Button text="↻" name="update-packages-list-button" />
         <ui:Button text="Discard managed assets" name="discard-assets-button" style="-unity-text-align: middle-center; white-space: nowrap;" />
     </uie:Toolbar>
 </ui:UXML>

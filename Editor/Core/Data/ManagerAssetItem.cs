@@ -1,6 +1,10 @@
 ﻿using System;
-using UnityEditor.PackageManager;
+
+using UnityEditor;
+
 using UnityEngine;
+
+using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace StansAssets.PackageManager
 {
@@ -9,8 +13,7 @@ namespace StansAssets.PackageManager
     {
         [SerializeField] PackageBindType m_PackageBindType;
         [SerializeField] PackageInfo m_PackageJson;
-        [SerializeField] string m_PackagePath;
-        [SerializeField] bool m_Enabled;
+        [SerializeField] PackageAssetState m_PackageState;
 
         internal PackageBindType PackageBindType
         {
@@ -24,16 +27,66 @@ namespace StansAssets.PackageManager
             set => m_PackageJson = value;
         }
 
-        internal string PackagePath
+        internal PackageAssetState PackageState
         {
-            get => m_PackagePath;
-            set => m_PackagePath = value;
+            get => m_PackageState;
+            set => m_PackageState = value;
         }
 
-        internal bool Enabled
+        public Texture StatusIcon
         {
-            get => m_Enabled;
-            set => m_Enabled = value;
+            get
+            {
+                var pro = EditorGUIUtility.isProSkin ? "d_" : "";
+                string icon;
+
+                switch (PackageState)
+                {
+                    case PackageAssetState.Enable:
+                        icon = "greenLight";
+
+                        break;
+                    case PackageAssetState.Disable:
+                        icon = "orangeLight";
+
+                        break;
+                    case PackageAssetState.NotFound:
+                    default:
+                        icon = "redLight";
+
+                        break;
+                }
+
+                return EditorGUIUtility.IconContent($"{pro}{icon}").image;
+            }
+        }
+
+        internal void Disable()
+        {
+            switch (PackageState)
+            {
+                case PackageAssetState.Disable:
+                    return;
+                case PackageAssetState.NotFound:
+                    throw new ArgumentNullException($"Unable to disable package. Fix the error first.");
+            }
+
+            PackageBuilder.RemoveFromProjectDependencies(this);
+            PackageState = PackageAssetState.Disable;
+        }
+
+        internal void Enable()
+        {
+            switch (PackageState)
+            {
+                case PackageAssetState.Enable:
+                    return;
+                case PackageAssetState.NotFound:
+                    throw new ArgumentNullException($"Unable to enable package. Fix the error first.");
+            }
+
+            PackageBuilder.AddToProjectDependencies(this);
+            PackageState = PackageAssetState.Enable;
         }
     }
 }

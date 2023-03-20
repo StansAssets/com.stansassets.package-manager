@@ -2,14 +2,22 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+
+using StansAssets.Foundation.Editor;
+
 using Unity.Plastic.Newtonsoft.Json;
+
 using UnityEditor;
+
 using UnityEngine;
 
 namespace StansAssets.PackageManager
 {
     static class PackageBuilder
     {
+        internal static string LocalPackagesCachePath
+            = $"{Application.temporaryCachePath}/{PackageManagerConfig.PackageName}/cache";
+
         internal static void BuildPackage(NewPackageInfo packageInfo, out bool successful)
         {
             Verification(packageInfo);
@@ -27,6 +35,7 @@ namespace StansAssets.PackageManager
             {
                 successful = false;
                 Console.WriteLine(e);
+
                 throw;
             }
             finally
@@ -187,8 +196,86 @@ namespace StansAssets.PackageManager
         {
             var data = File.ReadAllText(path);
             var package = JsonConvert.DeserializeObject<PackageJson>(data);
-            
+
             return package;
+        }
+
+        internal static void AddToProjectDependencies(ManagerAssetItem assetItem)
+        {
+            switch (assetItem.PackageBindType)
+            {
+                case PackageBindType.Manifest:
+                {
+                    var manifest = new Manifest();
+                    manifest.Fetch();
+                    manifest.SetDependency(assetItem.PackageJson.name, assetItem.PackageJson.version);
+                    manifest.ApplyChanges();
+
+                    break;
+                }
+                case PackageBindType.LocalPackages:
+                {
+                    if (!Directory.Exists(LocalPackagesCachePath))
+                    {
+                        break;
+                    }
+
+                    FileUtil.MoveFileOrDirectory($"{LocalPackagesCachePath}/{assetItem.PackageJson.name}",
+                        assetItem.PackageJson.resolvedPath);
+
+                    break;
+                }
+                case PackageBindType.LocalFile:
+                {
+                    var manifest = new Manifest();
+                    manifest.Fetch();
+                    manifest.SetDependency(assetItem.PackageJson.name, $"file:{assetItem.PackageJson.resolvedPath}");
+                    manifest.ApplyChanges();
+
+                    break;
+                }
+            }
+
+            EditorApplication.ExecuteMenuItem("Assets/Refresh");
+        }
+
+        internal static void RemoveFromProjectDependencies(ManagerAssetItem assetItem)
+        {
+            switch (assetItem.PackageBindType)
+            {
+                case PackageBindType.Manifest:
+                {
+                    var manifest = new Manifest();
+                    manifest.Fetch();
+                    manifest.RemoveDependency(assetItem.PackageJson.name);
+                    manifest.ApplyChanges();
+
+                    break;
+                }
+                case PackageBindType.LocalPackages:
+                {
+                    if (!Directory.Exists(LocalPackagesCachePath))
+                    {
+                        Directory.CreateDirectory(LocalPackagesCachePath);
+                    }
+
+                    FileUtil.MoveFileOrDirectory(assetItem.PackageJson.resolvedPath,
+                        $"{LocalPackagesCachePath}/{assetItem.PackageJson.name}");
+
+                    break;
+                }
+                case PackageBindType.LocalFile:
+                {
+                    var manifest = new Manifest();
+                    manifest.Fetch();
+                    manifest.RemoveDependency(assetItem.PackageJson.name);
+                    manifest.ApplyChanges();
+
+                    break;
+                }
+            }
+
+            EditorApplication.ExecuteMenuItem("Assets/Refresh");
         }
     }
 }
