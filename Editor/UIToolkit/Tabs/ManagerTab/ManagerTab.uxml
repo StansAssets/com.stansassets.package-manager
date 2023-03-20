@@ -2,7 +2,7 @@
     <uie:Toolbar class="top-tool-bar" style="flex-direction: row;">
         <ui:Button text="Create new package" name="create-package-button" />
     </uie:Toolbar>
-    <uie:VisualSplitter style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
+    <uie:VisualSplitter fixedPaneIndex="1" style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
         <ui:VisualElement class="packages-list-container" style="min-width: 200px; align-items: stretch; justify-content: flex-start; flex-direction: column;">
             <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item" style="height: 22;">
                 <ui:ListView name="packages-list-unity" style="flex-grow: 1; min-width: 100px;" />
