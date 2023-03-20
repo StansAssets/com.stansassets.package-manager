@@ -29,6 +29,7 @@ namespace StansAssets.PackageManager.Editor
         void OnDisable()
         {
             PackConfigurationSettings.Save();
+            PackManagerAssetSettings.Save();
         }
     }
 }

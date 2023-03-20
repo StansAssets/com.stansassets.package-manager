@@ -39,12 +39,21 @@ namespace StansAssets.PackageManager.Editor
             rootElement.Q<Label>("version").text = $"Version: {packageInfo.version}";
 
             m_TabControl = new TabControl(rootElement);
-
+            m_TabControl.ContentContainerFlexGrow(1);
+            
             m_TabControl.AddTab("manager", "Manage", new ManagerTab());
             m_TabControl.AddTab("configuration", "Configuration", new ConfigurationTab());
             m_TabControl.AddTab("about", "About", new AboutTab());
 
             m_TabControl.ActivateTab("configuration");
+        }
+
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            
+            PackConfigurationSettings.Save();
+            PackManagerAssetSettings.Save();
         }
 
         [SettingsProvider]
