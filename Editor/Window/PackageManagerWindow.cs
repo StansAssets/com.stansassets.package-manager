@@ -19,6 +19,8 @@ namespace StansAssets.PackageManager.Editor
 
         protected override void OnWindowEnable(VisualElement root)
         {
+            ContentContainerFlexGrow(1);
+            
             AddTab("Manage", new ManagerTab());
             AddTab("Configuration", new ConfigurationTab());
             AddTab("About", new AboutTab());

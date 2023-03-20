@@ -178,9 +178,17 @@ namespace StansAssets.PackageManager
         static void CreatePackageJson(NewPackageInfo packageInfo)
         {
             var path = $"Packages/{packageInfo.Package.Name}";
-            var json = JsonConvert.SerializeObject(packageInfo.Package, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(packageInfo.Package);
 
-            File.WriteAllText($"{path}/package.json", json, Encoding.UTF8);
+            File.WriteAllText($"{path}/package.json", json);
+        }
+
+        internal static PackageJson UnpackPackage(string path)
+        {
+            var data = File.ReadAllText(path);
+            var package = JsonConvert.DeserializeObject<PackageJson>(data);
+            
+            return package;
         }
     }
 }

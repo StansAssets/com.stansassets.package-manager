@@ -1,5 +1,31 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:VisualElement style="align-items: flex-end;">
+    <uie:Toolbar class="top-tool-bar" style="flex-direction: row;">
         <ui:Button text="Create new package" name="create-package-button" />
-    </ui:VisualElement>
+    </uie:Toolbar>
+    <uie:VisualSplitter style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
+        <ui:VisualElement class="packages-list-container" style="min-width: 200px; align-items: stretch; justify-content: flex-start; flex-direction: column;">
+            <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item" style="height: 22;">
+                <ui:ListView name="packages-list-unity" style="flex-grow: 1; min-width: 100px;" />
+            </ui:Foldout>
+            <ui:Foldout text="Local" name="fd-local" class="list-foldout-item" style="height: 22;">
+                <ui:ListView name="packages-list-local" style="flex-grow: 1; min-width: 100px;" />
+            </ui:Foldout>
+            <ui:Foldout text="File" name="fd-file" class="list-foldout-item" style="height: 22;">
+                <ui:ListView name="packages-list-file" style="flex-grow: 1; min-width: 100px;" />
+            </ui:Foldout>
+        </ui:VisualElement>
+        <ui:VisualElement class="package-details-container" style="flex-grow: 1; min-width: 200px;">
+            <ui:VisualElement class="header" style="flex-shrink: 0;">
+                <ui:VisualElement class="title-bar" style="flex-shrink: 0;">
+                    <ui:Label text="Package Name" name="display-name" class="title" />
+                    <ui:Label text="version: 1.0" name="version" class="version" />
+                </ui:VisualElement>
+                <ui:Label name="package-name-value" text="com.company.some-name" style="margin-left: 10px; -unity-font-style: bold-and-italic; -unity-text-align: upper-left; margin-bottom: 2px;" />
+                <ui:Label text="A tool for creating, configuring and managing plugins in the Unity project." name="description" class="description" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </uie:VisualSplitter>
+    <uie:Toolbar style="flex-direction: row;">
+        <ui:Button text="Discard managed assets" name="discard-assets-button" style="-unity-text-align: middle-center; white-space: nowrap;" />
+    </uie:Toolbar>
 </ui:UXML>
