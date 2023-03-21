@@ -15,7 +15,7 @@ namespace StansAssets.PackageManager
 {
     static class PackageBuilder
     {
-        internal static string LocalPackagesCachePath
+        internal static readonly string LocalPackagesCachePath
             = $"{Application.temporaryCachePath}/{PackageManagerConfig.PackageName}/cache";
 
         internal static void BuildPackage(NewPackageInfo packageInfo, out bool successful)
