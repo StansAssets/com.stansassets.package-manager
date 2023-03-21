@@ -4,6 +4,7 @@
     {
         Manifest,
         LocalPackages,
-        LocalFile
+        LocalFile,
+        GitUrl,
     }
 }

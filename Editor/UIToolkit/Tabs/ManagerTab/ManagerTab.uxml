@@ -7,6 +7,9 @@
             <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item">
                 <ui:ListView name="packages-list-unity" style="flex-grow: 1; min-width: 100px;" />
             </ui:Foldout>
+            <ui:Foldout text="Git URL" name="fd-git" class="list-foldout-item">
+                <ui:ListView name="packages-list-git" style="flex-grow: 1; min-width: 100px;" />
+            </ui:Foldout>
             <ui:Foldout text="Local Packages" name="fd-local" class="list-foldout-item">
                 <ui:ListView name="packages-list-local" style="flex-grow: 1; min-width: 100px;" />
             </ui:Foldout>

@@ -82,6 +82,11 @@ namespace StansAssets.PackageManager.Editor
                 .Where(i => i.PackageJson.name.StartsWith("com.unity."))
                 .ToList();
             BindList(root, unityList, "unity");
+            
+            var gitList = PackManagerAssetSettings.Instance.PackagesList
+                .Where(i => i.PackageBindType == PackageBindType.GitUrl)
+                .ToList();
+            BindList(root, gitList, "git");
 
             var fileList = PackManagerAssetSettings.Instance.PackagesList
                 .Where(i => i.PackageBindType == PackageBindType.LocalFile)
@@ -211,9 +216,16 @@ namespace StansAssets.PackageManager.Editor
                 var exists = PackManagerAssetSettings.Instance
                     .PackagesList.FirstOrDefault(i => i.PackageJson.name.Equals(dependency.Name));
 
-                var bindType = dependency.Version.StartsWith("file:")
-                    ? PackageBindType.LocalFile
-                    : PackageBindType.Manifest;
+                var bindType = PackageBindType.Manifest;
+
+                if (dependency.Version.StartsWith("file:"))
+                {
+                    bindType = PackageBindType.LocalFile;
+                }
+                else if (dependency.Version.StartsWith("http"))
+                {
+                    bindType = PackageBindType.GitUrl;
+                }
 
                 if (exists != null)
                 {
@@ -271,7 +283,7 @@ namespace StansAssets.PackageManager.Editor
                     assetItem.PackageState = PackageAssetState.Enable;
                 }
                 else if ((assetItem.PackageState == PackageAssetState.Enable
-                          || assetItem.PackageState == PackageAssetState.NotFound) 
+                          || assetItem.PackageState == PackageAssetState.NotFound)
                          && inCacheExists)
                 {
                     assetItem.PackageState = PackageAssetState.Disable;

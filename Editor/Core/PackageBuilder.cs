@@ -205,6 +205,7 @@ namespace StansAssets.PackageManager
             switch (assetItem.PackageBindType)
             {
                 case PackageBindType.Manifest:
+                case PackageBindType.GitUrl:
                 {
                     var manifest = new Manifest();
                     manifest.Fetch();
@@ -244,6 +245,7 @@ namespace StansAssets.PackageManager
             switch (assetItem.PackageBindType)
             {
                 case PackageBindType.Manifest:
+                case PackageBindType.GitUrl:
                 {
                     var manifest = new Manifest();
                     manifest.Fetch();
