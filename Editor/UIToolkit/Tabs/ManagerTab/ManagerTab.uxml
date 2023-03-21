@@ -32,7 +32,7 @@
         </ui:VisualElement>
     </uie:VisualSplitter>
     <uie:Toolbar style="flex-direction: row;">
-        <ui:Button text="↻" name="update-packages-list-button" />
-        <ui:Button text="Discard managed assets" name="discard-assets-button" style="-unity-text-align: middle-center; white-space: nowrap;" />
+        <ui:Button text="↻" tooltip="Refresh list" name="update-packages-list-button" />
+        <ui:Button text="Discard" tooltip="Remove managed packages" name="discard-assets-button" style="-unity-text-align: middle-center; white-space: nowrap;" />
     </uie:Toolbar>
 </ui:UXML>
