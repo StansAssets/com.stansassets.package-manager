@@ -1,20 +1,20 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <uie:Toolbar class="top-tool-bar" style="flex-direction: row;">
-        <ui:Button text="Create new package" name="create-package-button" />
+        <ui:Button text="New package" name="create-package-button" />
     </uie:Toolbar>
     <uie:VisualSplitter fixedPaneIndex="1" style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
         <ui:VisualElement class="packages-list-container" style="min-width: 200px; align-items: stretch; justify-content: flex-start; flex-direction: column;">
             <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item">
-                <ui:ListView name="packages-list-unity" style="flex-grow: 1; min-width: 100px;" />
+                <ui:ListView name="packages-list-unity" class="packages-list" style="flex-grow: 1; min-width: 100px;" />
             </ui:Foldout>
             <ui:Foldout text="Git URL" name="fd-git" class="list-foldout-item">
-                <ui:ListView name="packages-list-git" style="flex-grow: 1; min-width: 100px;" />
+                <ui:ListView name="packages-list-git" class="packages-list" />
             </ui:Foldout>
             <ui:Foldout text="Local Packages" name="fd-local" class="list-foldout-item">
-                <ui:ListView name="packages-list-local" style="flex-grow: 1; min-width: 100px;" />
+                <ui:ListView name="packages-list-local" class="packages-list" />
             </ui:Foldout>
             <ui:Foldout text="Local Disk" name="fd-file" class="list-foldout-item">
-                <ui:ListView name="packages-list-file" style="flex-grow: 1; min-width: 100px;" />
+                <ui:ListView name="packages-list-file" class="packages-list" />
             </ui:Foldout>
         </ui:VisualElement>
         <ui:VisualElement class="package-details-container" style="flex-grow: 1; min-width: 200px;">

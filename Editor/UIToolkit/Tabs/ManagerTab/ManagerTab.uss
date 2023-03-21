@@ -17,3 +17,9 @@
 .packages-list-container {
     padding-top: 2px;
 }
+
+.packages-list {
+    flex-grow: 1;
+    min-width: 100px;
+    border-top-width: 1px;
+}

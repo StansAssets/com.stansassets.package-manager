@@ -1,5 +1,5 @@
 .top-tool-bar, .package-details-container {
-    border-color: rgb(91, 91, 91);
+    border-color: #5c5c5c;
 }
 
 .list-foldout-item {
@@ -12,5 +12,11 @@
 }
 
 .packages-list-container {
+    background-color: #d5d5d5;
+}
+
+
+.packages-list {
+    border-top-color: #666666;
     background-color: #d5d5d5;
 }
