@@ -6,6 +6,7 @@
     margin-bottom: 2px;
     font-size: 16px;
     border-bottom-width: 1px;
+    height: 26px;
 }
 
 .item-border {

@@ -4,13 +4,13 @@
     </uie:Toolbar>
     <uie:VisualSplitter fixedPaneIndex="1" style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
         <ui:VisualElement class="packages-list-container" style="min-width: 200px; align-items: stretch; justify-content: flex-start; flex-direction: column;">
-            <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item" style="height: 22;">
+            <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item">
                 <ui:ListView name="packages-list-unity" style="flex-grow: 1; min-width: 100px;" />
             </ui:Foldout>
-            <ui:Foldout text="Local" name="fd-local" class="list-foldout-item" style="height: 22;">
+            <ui:Foldout text="Local Packages" name="fd-local" class="list-foldout-item">
                 <ui:ListView name="packages-list-local" style="flex-grow: 1; min-width: 100px;" />
             </ui:Foldout>
-            <ui:Foldout text="File" name="fd-file" class="list-foldout-item" style="height: 22;">
+            <ui:Foldout text="Local Disk" name="fd-file" class="list-foldout-item">
                 <ui:ListView name="packages-list-file" style="flex-grow: 1; min-width: 100px;" />
             </ui:Foldout>
         </ui:VisualElement>
