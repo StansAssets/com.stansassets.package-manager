@@ -6,9 +6,9 @@ namespace StansAssets.PackageManager
     [Serializable]
     class NamingConvention
     {
-        [SerializeField] string m_DisplayPrefix;
-        [SerializeField] string m_NamePrefix;
-        [SerializeField] NameConventionType m_ConventionType;
+        [SerializeField] string m_DisplayPrefix = "";
+        [SerializeField] string m_NamePrefix = "";
+        [SerializeField] NameConventionType m_ConventionType = NameConventionType.None;
 
         internal string DisplayPrefix
         {
