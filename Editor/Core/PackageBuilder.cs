@@ -236,8 +236,6 @@ namespace StansAssets.PackageManager
                     break;
                 }
             }
-
-            EditorApplication.ExecuteMenuItem("Assets/Refresh");
         }
 
         internal static void RemoveFromProjectDependencies(ManagerAssetItem assetItem)
@@ -276,8 +274,6 @@ namespace StansAssets.PackageManager
                     break;
                 }
             }
-
-            EditorApplication.ExecuteMenuItem("Assets/Refresh");
         }
     }
 }
