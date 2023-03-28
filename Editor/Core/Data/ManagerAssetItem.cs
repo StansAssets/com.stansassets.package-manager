@@ -1,9 +1,6 @@
 ﻿using System;
-
 using UnityEditor;
-
 using UnityEngine;
-
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace StansAssets.PackageManager
@@ -61,7 +58,7 @@ namespace StansAssets.PackageManager
             }
         }
 
-        internal void Disable()
+        internal void Disable(bool refreshEditor)
         {
             switch (PackageState)
             {
@@ -73,20 +70,44 @@ namespace StansAssets.PackageManager
 
             PackageBuilder.RemoveFromProjectDependencies(this);
             PackageState = PackageAssetState.Disable;
-        }
 
-        internal void Enable()
-        {
-            switch (PackageState)
+            if (refreshEditor)
             {
-                case PackageAssetState.Enable:
-                    return;
-                case PackageAssetState.NotFound:
-                    throw new ArgumentNullException($"Unable to enable package. Fix the error first.");
+                EditorApplication.ExecuteMenuItem("Assets/Refresh");
+            }
+        }
+        
+        internal void SetPackageState(PackageAssetState newState, bool refreshEditor)
+        {
+            if (newState == PackageState)
+            {
+                return;
             }
 
-            PackageBuilder.AddToProjectDependencies(this);
-            PackageState = PackageAssetState.Enable;
+            if (newState == PackageAssetState.NotFound)
+            {
+                throw new ArgumentNullException($"Unable to enable package. Fix the error first.");
+            }
+
+
+            switch (newState)
+            {
+                case PackageAssetState.Enable:
+                    PackageBuilder.AddToProjectDependencies(this);
+                    break;
+                case PackageAssetState.Disable:
+                    PackageBuilder.RemoveFromProjectDependencies(this);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+            }
+            
+            PackageState = newState;
+
+            if (refreshEditor)
+            {
+                EditorApplication.ExecuteMenuItem("Assets/Refresh");
+            }
         }
     }
 }

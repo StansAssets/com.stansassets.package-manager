@@ -1,14 +1,12 @@
 ﻿#if UNITY_2019_4_OR_NEWER
 
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
-
 using UnityEditor;
-
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -56,14 +54,10 @@ namespace StansAssets.PackageManager.Editor
                     return;
                 }
 
-                if (m_SelectedAssetItem.PackageState == PackageAssetState.Enable)
-                {
-                    m_SelectedAssetItem.Disable();
-                }
-                else
-                {
-                    m_SelectedAssetItem.Enable();
-                }
+                m_SelectedAssetItem.SetPackageState(m_SelectedAssetItem.PackageState == PackageAssetState.Enable
+                        ? PackageAssetState.Disable
+                        : PackageAssetState.Enable,
+                    true);
 
                 BindUnityPackages(root);
             };
@@ -82,7 +76,7 @@ namespace StansAssets.PackageManager.Editor
                 .Where(i => i.PackageJson.name.StartsWith("com.unity."))
                 .ToList();
             BindList(root, unityList, "unity");
-            
+
             var gitList = PackManagerAssetSettings.Instance.PackagesList
                 .Where(i => i.PackageBindType == PackageBindType.GitUrl)
                 .ToList();
@@ -101,13 +95,12 @@ namespace StansAssets.PackageManager.Editor
             // Display first element
             m_SelectedAssetItem = m_SelectedAssetItem ?? unityList.FirstOrDefault();
             DisplayPackageDetails(root, m_SelectedAssetItem);
+            HideMultipleSelectionToolBar(root);
         }
 
         void BindList(VisualElement root, List<ManagerAssetItem> dependencies, string listName)
         {
             var list = root.Q<ListView>($"packages-list-{listName}");
-            list.itemHeight = ManagerListItem.ItemHeight;
-            list.itemsSource = dependencies;
 
             list.bindItem = (element, i) =>
             {
@@ -151,7 +144,21 @@ namespace StansAssets.PackageManager.Editor
 
                 m_SelectedAssetItem = selectedItem;
                 DisplayPackageDetails(root, selectedItem);
+
+                if (objects.Count > 1)
+                {
+                    MultipleItemsSelected(root, objects);
+                }
+                else
+                {
+                    HideMultipleSelectionToolBar(root);
+                }
             };
+
+            list.Clear();
+            list.itemsSource = dependencies;
+            list.itemHeight = ManagerListItem.ItemHeight;
+            list.selectionType = SelectionType.Multiple;
 
             var foldout = root.Q<Foldout>($"fd-{listName}");
             foldout.value = m_SelectedAssetItem != null && foldout.value;
@@ -166,6 +173,36 @@ namespace StansAssets.PackageManager.Editor
             {
                 foldout.value = true;
                 list.selectedIndex = list.itemsSource.IndexOf(m_SelectedAssetItem);
+            }
+        }
+
+        void HideMultipleSelectionToolBar(VisualElement root)
+        {
+            var toolBar = root.Q<VisualElement>("multiple-selection");
+            toolBar.style.display = DisplayStyle.None;
+        }
+
+        void MultipleItemsSelected(VisualElement root, ICollection objects)
+        {
+            var toolBar = root.Q<VisualElement>("multiple-selection");
+            var selectedCount = root.Q<Label>("selected-count");
+            var enableBtn = root.Q<Button>("enable-all-btn");
+            var disableBtn = root.Q<Button>("disable-all-btn");
+
+            selectedCount.text = $"Selected: {objects.Count}";
+            enableBtn.clicked += () => SetSelectedCollectionState(root, objects, PackageAssetState.Enable);
+            disableBtn.clicked += () => SetSelectedCollectionState(root, objects, PackageAssetState.Disable);
+            toolBar.style.display = DisplayStyle.Flex;
+
+            void SetSelectedCollectionState(VisualElement rootElement, IEnumerable objs, PackageAssetState state)
+            {
+                foreach (var o in objs)
+                {
+                    (o as ManagerAssetItem)?.SetPackageState(state, false);
+                }
+
+                EditorApplication.ExecuteMenuItem("Assets/Refresh");
+                BindUnityPackages(rootElement);
             }
         }
 

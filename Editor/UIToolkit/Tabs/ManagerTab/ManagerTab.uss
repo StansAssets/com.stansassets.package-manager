@@ -21,3 +21,7 @@
     min-width: 100px;
     border-top-width: 1px;
 }
+
+.multiple-selection{
+    border-bottom-width: 1px;
+}

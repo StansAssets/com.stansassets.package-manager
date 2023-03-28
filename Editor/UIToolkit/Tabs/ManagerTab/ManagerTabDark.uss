@@ -19,3 +19,7 @@
     border-top-color: #4e4e4e;
     background-color: #424242;
 }
+
+.multiple-selection{
+    border-color: #3562a1;
+}

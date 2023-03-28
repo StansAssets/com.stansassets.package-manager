@@ -20,3 +20,7 @@
     border-top-color: #666666;
     background-color: #d5d5d5;
 }
+
+.multiple-selection{
+    border-color: #3562a1;
+}
