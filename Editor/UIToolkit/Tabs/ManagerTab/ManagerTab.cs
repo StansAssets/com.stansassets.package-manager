@@ -15,11 +15,13 @@ namespace StansAssets.PackageManager.Editor
     class ManagerTab : BaseTab
     {
         ManagerAssetItem m_SelectedAssetItem;
+        readonly Dictionary<string, VisualElement> m_FoldOuts;
 
         internal ManagerTab()
             : base($"{PackageManagerConfig.WindowTabsPath}/ManagerTab/ManagerTab")
         {
             Root.style.flexGrow = 1;
+            m_FoldOuts = new Dictionary<string, VisualElement>();
 
             BindButtons(Root);
             BindUnityPackages(Root);
@@ -75,22 +77,22 @@ namespace StansAssets.PackageManager.Editor
             var unityList = PackManagerAssetSettings.Instance.PackagesList
                 .Where(i => i.PackageJson.name.StartsWith("com.unity."))
                 .ToList();
-            BindList(root, unityList, "unity");
+            BindList(root, unityList, "unity", "Unity Technologies");
 
             var gitList = PackManagerAssetSettings.Instance.PackagesList
                 .Where(i => i.PackageBindType == PackageBindType.GitUrl)
                 .ToList();
-            BindList(root, gitList, "git");
+            BindList(root, gitList, "git", "Gir URL");
 
             var fileList = PackManagerAssetSettings.Instance.PackagesList
                 .Where(i => i.PackageBindType == PackageBindType.LocalFile)
                 .ToList();
-            BindList(root, fileList, "file");
+            BindList(root, fileList, "file", "Local Disk");
 
             var localList = PackManagerAssetSettings.Instance.PackagesList
                 .Where(i => i.PackageBindType == PackageBindType.LocalPackages)
                 .ToList();
-            BindList(root, localList, "local");
+            BindList(root, localList, "local", "Local File");
 
             // Display first element
             m_SelectedAssetItem = m_SelectedAssetItem ?? unityList.FirstOrDefault();
@@ -98,9 +100,26 @@ namespace StansAssets.PackageManager.Editor
             HideMultipleSelectionToolBar(root);
         }
 
-        void BindList(VisualElement root, List<ManagerAssetItem> dependencies, string listName)
+        void BindList(VisualElement root, List<ManagerAssetItem> dependencies, string listName, string displayName)
         {
-            var list = root.Q<ListView>($"packages-list-{listName}");
+            VisualElement fdList;
+
+            if (m_FoldOuts.ContainsKey(listName))
+            {
+                fdList = m_FoldOuts[listName];
+            }
+            else
+            {
+                var container = root.Q<VisualElement>("packages-list-container");
+                fdList = FoldedListView.ItemComponent.CloneTree();
+
+                m_FoldOuts.Add(listName, fdList);
+                container.Add(fdList);
+
+                UIToolkitEditorUtility.ApplyStyle(fdList, FoldedListView.ItemComponentStyle);
+            }
+
+            var list = fdList.Q<ListView>();
 
             list.bindItem = (element, i) =>
             {
@@ -109,26 +128,26 @@ namespace StansAssets.PackageManager.Editor
                 var stateIcon = element.Q<Image>("state-icon");
                 stateIcon.image = dependency.StatusIcon;
 
-                var packageName = element.Q<Label>(ManagerListItem.NameComponent);
+                var packageName = element.Q<Label>(FoldedListViewItem.NameComponent);
                 packageName.text = $"{dependency.PackageJson.displayName}";
 
-                var packageVersion = element.Q<Label>(ManagerListItem.VersionComponent);
+                var packageVersion = element.Q<Label>(FoldedListViewItem.VersionComponent);
                 packageVersion.text = dependency.PackageJson.version;
             };
 
             list.makeItem = () =>
             {
-                var element = ManagerListItem.ItemComponent.CloneTree();
-                UIToolkitEditorUtility.ApplyStyle(element, ManagerListItem.ItemComponentStyle);
+                var element = FoldedListViewItem.ItemComponent.CloneTree();
+                UIToolkitEditorUtility.ApplyStyle(element, FoldedListViewItem.ItemComponentStyle);
 
                 var stateIcon = element.Q<Image>("state-icon");
                 stateIcon.scaleMode = ScaleMode.ScaleToFit;
 
-                var packageName = element.Q<Label>(ManagerListItem.NameComponent);
-                packageName.text = ManagerListItem.DefaultEmptyValue;
+                var packageName = element.Q<Label>(FoldedListViewItem.NameComponent);
+                packageName.text = FoldedListViewItem.DefaultEmptyValue;
 
-                var packageVersion = element.Q<Label>(ManagerListItem.VersionComponent);
-                packageVersion.text = ManagerListItem.DefaultEmptyValue;
+                var packageVersion = element.Q<Label>(FoldedListViewItem.VersionComponent);
+                packageVersion.text = FoldedListViewItem.DefaultEmptyValue;
 
                 return element;
             };
@@ -157,15 +176,19 @@ namespace StansAssets.PackageManager.Editor
 
             list.Clear();
             list.itemsSource = dependencies;
-            list.itemHeight = ManagerListItem.ItemHeight;
+            list.itemHeight = FoldedListViewItem.ItemHeight;
             list.selectionType = SelectionType.Multiple;
 
-            var foldout = root.Q<Foldout>($"fd-{listName}");
+            var foldout = fdList.Q<Foldout>();
+            foldout.text = $"{displayName} ˙{list.itemsSource.Count}";
             foldout.value = m_SelectedAssetItem != null && foldout.value;
             foldout.contentContainer.style.flexGrow = 1;
             foldout.contentContainer.style.marginLeft = 0;
             foldout.RegisterValueChangedCallback(evt =>
             {
+                foldout.style.height = evt.newValue
+                    ? list.itemHeight * list.itemsSource.Count + 24
+                    : 24;
                 foldout.style.flexGrow = evt.newValue ? 1 : 0;
             });
 
@@ -174,6 +197,9 @@ namespace StansAssets.PackageManager.Editor
                 foldout.value = true;
                 list.selectedIndex = list.itemsSource.IndexOf(m_SelectedAssetItem);
             }
+
+            var toolbar = fdList.Q<VisualElement>(FoldedListView.ToolbarComponentName);
+            toolbar.style.display = DisplayStyle.None;
         }
 
         void HideMultipleSelectionToolBar(VisualElement root)

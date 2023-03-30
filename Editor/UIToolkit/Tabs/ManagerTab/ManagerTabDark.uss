@@ -2,24 +2,14 @@
     border-color: #8e8e8e;
 }
 
-.list-foldout-item {
-    background-color: #383838;
-    border-color: black;
-}
-
 .package-details-container {
     background-color: #383838;
 }
 
-.packages-list-container {
-    background-color: #424242;
-}
-
-.packages-list {
-    border-top-color: #4e4e4e;
-    background-color: #424242;
-}
-
 .multiple-selection{
     border-color: #3562a1;
+}
+
+.packages-list-container {
+    background-color: #424242;
 }

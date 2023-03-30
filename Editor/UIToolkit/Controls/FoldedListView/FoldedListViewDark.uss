@@ -1,0 +1,9 @@
+.packages-list {
+    border-top-color: #4e4e4e;
+    background-color: #424242;
+}
+
+.list-foldout-item {
+    background-color: #383838;
+    border-color: black;
+}

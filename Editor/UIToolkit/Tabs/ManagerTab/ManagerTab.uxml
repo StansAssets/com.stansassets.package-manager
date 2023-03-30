@@ -1,22 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <uie:Toolbar class="top-tool-bar" style="flex-direction: row;">
+    <uie:Toolbar class="top-tool-bar" style="flex-direction: row; min-height: 21px;">
         <ui:Button text="New package" name="create-package-button" />
     </uie:Toolbar>
-    <uie:VisualSplitter fixedPaneIndex="1" style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
-        <ui:VisualElement class="packages-list-container" style="min-width: 200px; align-items: stretch; justify-content: flex-start; flex-direction: column;">
-            <ui:Foldout text="Unity Technologies" name="fd-unity" class="list-foldout-item">
-                <ui:ListView name="packages-list-unity" class="packages-list" style="flex-grow: 1; min-width: 100px;" />
-            </ui:Foldout>
-            <ui:Foldout text="Git URL" name="fd-git" class="list-foldout-item">
-                <ui:ListView name="packages-list-git" class="packages-list" />
-            </ui:Foldout>
-            <ui:Foldout text="Local Packages" name="fd-local" class="list-foldout-item">
-                <ui:ListView name="packages-list-local" class="packages-list" />
-            </ui:Foldout>
-            <ui:Foldout text="Local Disk" name="fd-file" class="list-foldout-item">
-                <ui:ListView name="packages-list-file" class="packages-list" />
-            </ui:Foldout>
-        </ui:VisualElement>
+    <uie:VisualSplitter fixedPaneIndex="1" style="flex-direction: row; justify-content: space-between; flex-grow: 1; flex-shrink: 1;">
+        <ui:ScrollView name="packages-list-container" class="packages-list-container" style="min-width: 200px; align-items: stretch; justify-content: flex-start; flex-direction: column;" />
         <ui:VisualElement class="package-details-container" style="flex-grow: 1; min-width: 200px;">
             <ui:VisualElement class="header" style="flex-shrink: 0;">
                 <ui:VisualElement class="title-bar" style="flex-shrink: 0;">
@@ -31,13 +18,13 @@
             </uie:Toolbar>
         </ui:VisualElement>
     </uie:VisualSplitter>
-    <uie:Toolbar style="flex-direction: row; height: 24px;">
-        <ui:Button text="↻" tooltip="Refresh list" name="update-packages-list-button" style="height:18px; width:18px;"/>
-        <ui:Button text="☒ Discard" tooltip="Remove managed packages" name="discard-assets-button" style="height:18px; -unity-text-align: middle-center; white-space: nowrap;" />
-        <ui:VisualElement name="multiple-selection" class="multiple-selection" style="height: 22px; flex-direction: row; margin-left: 8px;">
+    <uie:Toolbar style="flex-direction: row; min-height: 22px;">
+        <ui:Button text="↻" tooltip="Refresh list" name="update-packages-list-button" style="height: 18px; width: 18px;" />
+        <ui:Button text="☒ Discard" tooltip="Remove managed packages" name="discard-assets-button" style="height: 18px; -unity-text-align: middle-center; white-space: nowrap;" />
+        <ui:VisualElement name="multiple-selection" class="multiple-selection" style="flex-direction: row; margin-left: 8px;">
             <ui:Label text="Selected: 7" name="selected-count" style="height: 100%; -unity-text-align: middle-left;" />
-            <ui:Button text="☑" name="enable-all-btn" tooltip="Enable selected" style="height:18px; width:18px;"/>
-            <ui:Button text="☐" name="disable-all-btn" tooltip="Disable selected" style="height:18px; width:18px;"/>
+            <ui:Button text="☑" name="enable-all-btn" tooltip="Enable selected" style="height: 18px; width: 18px;" />
+            <ui:Button text="☐" name="disable-all-btn" tooltip="Disable selected" style="height: 18px; width: 18px;" />
         </ui:VisualElement>
     </uie:Toolbar>
 </ui:UXML>

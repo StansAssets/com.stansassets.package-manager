@@ -2,26 +2,9 @@
     border-left-width: 1px;
 }
 
-.list-foldout-item {
-    font-size: 14px;
+.multiple-selection{
     border-bottom-width: 1px;
-    height: 24px;
-}
-
-.item-border {
-    padding-left: 6px;
-    font-size: 14px;
 }
 
 .packages-list-container {
-}
-
-.packages-list {
-    flex-grow: 1;
-    min-width: 100px;
-    border-top-width: 1px;
-}
-
-.multiple-selection{
-    border-bottom-width: 1px;
 }

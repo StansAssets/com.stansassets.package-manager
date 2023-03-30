@@ -1,0 +1,11 @@
+.list-foldout-item {
+    font-size: 14px;
+    border-bottom-width: 1px;
+    height: 24px;
+}
+
+.packages-list {
+    flex-grow: 1;
+    min-width: 100px;
+    border-top-width: 1px;
+}

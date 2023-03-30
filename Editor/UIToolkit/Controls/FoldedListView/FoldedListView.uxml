@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Foldout text="Unity Technologies" value="false" class="list-foldout-item">
+        <ui:VisualElement name="toggle-toolbar" style="flex-direction: row; height: 21px; max-height: 21px; min-height: 21px;" />
+        <ui:ListView class="packages-list" style="flex-grow: 1; min-width: 100px;" />
+    </ui:Foldout>
+</ui:UXML>

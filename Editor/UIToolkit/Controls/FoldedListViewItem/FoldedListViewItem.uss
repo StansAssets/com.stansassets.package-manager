@@ -1,0 +1,5 @@
+.item-border {
+    padding-left: 2px;
+    font-size: 13px;
+    border-bottom-width: 1px;
+}

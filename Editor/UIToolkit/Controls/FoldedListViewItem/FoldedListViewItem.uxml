@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="item-border" style="height: 21; flex-grow: 0; flex-direction: row;">
+        <ui:Image name="state-icon" style="height: 100%; min-width: 6px; max-width: 6px;" />
+        <ui:Label text="None" name="package-name" style="margin-left: 2px; min-width: 120px; align-self: flex-start; flex-grow: 1; -unity-text-align: middle-left; height: 100%;" />
+        <ui:Label text="0.0.0" name="package-version" style="align-self: flex-end; -unity-text-align: middle-right; height: 100%;" />
+    </ui:VisualElement>
+</ui:UXML>

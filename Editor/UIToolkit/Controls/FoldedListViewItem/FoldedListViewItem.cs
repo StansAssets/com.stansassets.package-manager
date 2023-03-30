@@ -5,18 +5,18 @@ using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
 {
-    static class ManagerListItem
+    static class FoldedListViewItem
     {
         internal static VisualTreeAsset ItemComponent => AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-            $"{PackageManagerConfig.WindowTabsPath}/" +
-            "ManagerTab/" +
-            "ManagerListItem.uxml");
+            $"{PackageManagerConfig.ControlsPath}/" +
+            "FoldedListViewItem/" +
+            "FoldedListViewItem.uxml");
 
         internal static string ItemComponentStyle => $"{PackageManagerConfig.ControlsPath}/" +
-                                                     "ManagerTab/" +
-                                                     "ManagerTab";
+                                                     "FoldedListViewItem/" +
+                                                     "FoldedListViewItem";
 
-        internal const int ItemHeight = 22;
+        internal const int ItemHeight = 21;
 
         internal const string NameComponent = "package-name";
         internal const string VersionComponent = "package-version";

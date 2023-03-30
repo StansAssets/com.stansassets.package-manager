@@ -1,0 +1,3 @@
+.item-border{
+    border-bottom-color: rgba(126, 126, 126, 0.26);
+}
