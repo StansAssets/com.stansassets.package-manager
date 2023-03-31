@@ -7,3 +7,7 @@
     background-color: #383838;
     border-color: black;
 }
+
+.toggle-toolbar {
+    border-color: rgba(126, 126, 126, 0.26);
+}

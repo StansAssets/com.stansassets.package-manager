@@ -9,3 +9,7 @@
     min-width: 100px;
     border-top-width: 1px;
 }
+
+.toggle-toolbar{
+    border-top-width: 1px;
+}

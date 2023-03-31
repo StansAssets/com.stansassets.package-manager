@@ -9,7 +9,9 @@ namespace StansAssets.PackageManager
         public override string PackageName => PackageManagerConfig.PackageName;
 
         [SerializeField] List<ManagerAssetItem> m_PackagesList = new List<ManagerAssetItem>();
+        [SerializeField] List<CustomManagerAssetList> m_ManagerAssetLists = new List<CustomManagerAssetList>();
 
         internal List<ManagerAssetItem> PackagesList => m_PackagesList;
+        internal List<CustomManagerAssetList> ManagerAssetLists => m_ManagerAssetLists;
     }
 }

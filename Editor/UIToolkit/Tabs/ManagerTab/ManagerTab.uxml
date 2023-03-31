@@ -25,6 +25,7 @@
             <ui:Label text="Selected: 7" name="selected-count" style="height: 100%; -unity-text-align: middle-left;" />
             <ui:Button text="☑" name="enable-all-btn" tooltip="Enable selected" style="height: 18px; width: 18px;" />
             <ui:Button text="☐" name="disable-all-btn" tooltip="Disable selected" style="height: 18px; width: 18px;" />
+            <ui:Button text="☆" name="create-custom-list-btn" tooltip="Create custom list" style="width: 18px; height: 18px;" />
         </ui:VisualElement>
     </uie:Toolbar>
 </ui:UXML>
