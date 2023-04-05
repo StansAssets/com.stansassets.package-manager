@@ -33,5 +33,13 @@ namespace StansAssets.PackageManager
             m_Packages = new List<string>();
             m_Packages.AddRange(packages);
         }
+        
+        internal CustomManagerAssetList(string name, string displayName)
+        {
+            m_Name = name;
+            m_DisplayName = displayName;
+
+            m_Packages = new List<string>();
+        }
     }
 }

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement style="flex-grow: 1; margin-top: 8px;">
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:TextField picking-mode="Ignore" label="Enter list name" name="name-tf" style="flex-grow: 1;" />
+            <ui:Button text="+" name="create-btn" tooltip="Create &amp; select" />
+        </ui:VisualElement>
+        <StansAssets.PackageManager.Editor.ListViewMich name="existing-lists" />
+        <ui:Button text="Select" name="select-btn" />
+    </ui:VisualElement>
+</ui:UXML>

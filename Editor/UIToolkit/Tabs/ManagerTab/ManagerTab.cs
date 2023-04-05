@@ -15,7 +15,13 @@ namespace StansAssets.PackageManager.Editor
     class ManagerTab : BaseTab
     {
         ManagerAssetItem m_SelectedAssetItem;
-        ICollection m_SelectedObjects;
+
+        (string listName, ICollection packages) m_SelectedObjects;
+        (string listName, string displayName, List<ManagerAssetItem> packages)[] m_DefaultLists;
+
+        List<ManagerAssetItem> SelectedPackages =>
+            (from object o in m_SelectedObjects.packages select o as ManagerAssetItem).ToList();
+
         readonly Dictionary<string, VisualElement> m_FoldOuts;
 
         internal ManagerTab()
@@ -79,42 +85,41 @@ namespace StansAssets.PackageManager.Editor
 
             var createCustomListBtn = root.Q<Button>("create-custom-list-btn");
             createCustomListBtn.clicked += () => CreateCustomListBtn(root);
+
+            var removeFromListBtn = root.Q<Button>("remove-from-list-btn");
+            removeFromListBtn.clicked += () => RemoveFromListBtn(root);
         }
 
         void BindUnityPackages(VisualElement root)
         {
             FetchDependencies();
 
-            var unityList = PackManagerAssetSettings.Instance.PackagesList
-                .Where(i => i.PackageJson.name.StartsWith("com.unity."))
-                .ToList();
-            BindList(root, unityList, "unity", "Unity Technologies");
+            m_DefaultLists = new (string listName, string displayName, List<ManagerAssetItem> packages)[]
+            {
+                ("unity", "Unity Technologies", PackManagerAssetSettings.Instance.PackagesList
+                    .Where(i => i.PackageJson.name.StartsWith("com.unity.")).ToList()),
+                ("git", "Gir URL", PackManagerAssetSettings.Instance.PackagesList
+                    .Where(i => i.PackageBindType == PackageBindType.GitUrl).ToList()),
+                ("file", "Local Disk", PackManagerAssetSettings.Instance.PackagesList
+                    .Where(i => i.PackageBindType == PackageBindType.LocalFile).ToList()),
+                ("local", "Local File", PackManagerAssetSettings.Instance.PackagesList
+                    .Where(i => i.PackageBindType == PackageBindType.LocalPackages).ToList()),
+            };
 
-            var gitList = PackManagerAssetSettings.Instance.PackagesList
-                .Where(i => i.PackageBindType == PackageBindType.GitUrl)
-                .ToList();
-            BindList(root, gitList, "git", "Gir URL");
-
-            var fileList = PackManagerAssetSettings.Instance.PackagesList
-                .Where(i => i.PackageBindType == PackageBindType.LocalFile)
-                .ToList();
-            BindList(root, fileList, "file", "Local Disk");
-
-            var localList = PackManagerAssetSettings.Instance.PackagesList
-                .Where(i => i.PackageBindType == PackageBindType.LocalPackages)
-                .ToList();
-            BindList(root, localList, "local", "Local File");
+            foreach (var list in m_DefaultLists)
+            {
+                BindList(root, list.packages, list.listName, list.displayName);
+            }
 
             // Custom lists
             var orderedCustomList = PackManagerAssetSettings.Instance.ManagerAssetLists
                 .OrderBy(i => i.DisplayName).ToArray();
 
-            for (var index = orderedCustomList.Length - 1; index > 0; index--)
+            for (var index = orderedCustomList.Length; index > 0; index--)
             {
-                var managerAssetList = orderedCustomList[index];
+                var managerAssetList = orderedCustomList[index - 1];
 
-                if (string.IsNullOrEmpty(managerAssetList.Name)
-                    || !managerAssetList.Packages.Any())
+                if (string.IsNullOrEmpty(managerAssetList.Name))
                 {
                     PackManagerAssetSettings.Instance.ManagerAssetLists.Remove(managerAssetList);
                     continue;
@@ -196,16 +201,12 @@ namespace StansAssets.PackageManager.Editor
             }
 
             // Display first element
-            m_SelectedAssetItem = m_SelectedAssetItem ?? unityList.FirstOrDefault();
             DisplayPackageDetails(root, m_SelectedAssetItem);
             HideMultipleSelectionToolBar(root);
 
             var folds = PackManagerAssetSettings.Instance.ManagerAssetLists
                 .Select(i => i.Name).ToList();
-            folds.Add("unity");
-            folds.Add("git");
-            folds.Add("file");
-            folds.Add("local");
+            folds.AddRange(m_DefaultLists.Select(s => s.listName));
 
             var toCheck = m_FoldOuts.Where(foldOut => !folds.Contains(foldOut.Key)).ToArray();
             foreach (var foldOut in toCheck)
@@ -235,9 +236,15 @@ namespace StansAssets.PackageManager.Editor
             }
 
             var list = fdList.Q<ListView>();
+            list.itemsSource = dependencies;
 
             list.bindItem = (element, i) =>
             {
+                if (dependencies.Count <= i)
+                {
+                    return;
+                }
+
                 var dependency = dependencies[i];
 
                 var stateIcon = element.Q<Image>("state-icon");
@@ -278,19 +285,9 @@ namespace StansAssets.PackageManager.Editor
 
                 m_SelectedAssetItem = selectedItem;
                 DisplayPackageDetails(root, selectedItem);
-
-                if (objects.Count > 1)
-                {
-                    MultipleItemsSelected(root, objects);
-                }
-                else
-                {
-                    HideMultipleSelectionToolBar(root);
-                }
+                MultipleItemsSelected(root, listName, objects);
             };
 
-            list.Clear();
-            list.itemsSource = dependencies;
             list.itemHeight = FoldedListViewItem.ItemHeight;
             list.selectionType = SelectionType.Multiple;
 
@@ -301,11 +298,9 @@ namespace StansAssets.PackageManager.Editor
             foldout.contentContainer.style.marginLeft = 0;
             foldout.RegisterValueChangedCallback(evt =>
             {
-                foldout.style.height = evt.newValue
-                    ? list.itemHeight * list.itemsSource.Count + 24 + 21
-                    : 24;
-                foldout.style.flexGrow = evt.newValue ? 1 : 0;
+                SetToggleHeight(evt.newValue);
             });
+            SetToggleHeight(foldout.value);
 
             if (m_SelectedAssetItem != null && dependencies.Contains(m_SelectedAssetItem))
             {
@@ -315,6 +310,14 @@ namespace StansAssets.PackageManager.Editor
 
             var toolbar = fdList.Q<VisualElement>(FoldedListView.ToolbarComponentName);
             toolbar.style.display = DisplayStyle.None;
+
+            void SetToggleHeight(bool v)
+            {
+                foldout.style.height = v
+                    ? list.itemHeight * list.itemsSource.Count + 24 + 21
+                    : 24;
+                foldout.style.flexGrow = v ? 1 : 0;
+            }
         }
 
         void HideMultipleSelectionToolBar(VisualElement root)
@@ -323,20 +326,26 @@ namespace StansAssets.PackageManager.Editor
             toolBar.style.display = DisplayStyle.None;
         }
 
-        void MultipleItemsSelected(VisualElement root, ICollection objects)
+        void MultipleItemsSelected(VisualElement root, string listName, ICollection objects)
         {
-            m_SelectedObjects = objects;
+            m_SelectedObjects.listName = listName;
+            m_SelectedObjects.packages = objects;
+
+            var isDefaultList = m_DefaultLists.Any(i => i.listName.Equals(listName));
 
             var selectedCount = root.Q<Label>("selected-count");
             selectedCount.text = $"Selected: {objects.Count}";
 
             var toolBar = root.Q<VisualElement>("multiple-selection");
             toolBar.style.display = DisplayStyle.Flex;
+
+            var removeFromListBtn = root.Q<Button>("remove-from-list-btn");
+            removeFromListBtn.style.display = isDefaultList ? DisplayStyle.None : DisplayStyle.Flex;
         }
 
         void SetSelectedCollectionState(VisualElement rootElement, PackageAssetState state)
         {
-            var customList = (from object o in m_SelectedObjects select o as ManagerAssetItem).ToList();
+            var customList = SelectedPackages;
 
             EditorApplication.ExecuteMenuItem("Assets/Refresh");
             BindUnityPackages(rootElement);
@@ -353,32 +362,43 @@ namespace StansAssets.PackageManager.Editor
 
         void CreateCustomListBtn(VisualElement root)
         {
-            var dialog = ScriptableObject.CreateInstance<TextDialog>();
-            dialog.Confirmed += listName =>
-            {
-                dialog.Close();
+            var packages = SelectedPackages.Select(i => i.PackageJson.name).ToList();
 
-                if (string.IsNullOrEmpty(listName)
-                    || PackManagerAssetSettings.Instance.ManagerAssetLists
-                        .Any(i => i.DisplayName.Equals(listName)))
+            FavoriteListDialog.ShowDialog("Select a list", assetList =>
+            {
+                if (assetList == null)
                 {
                     return;
                 }
 
-                var packages = (from object o in m_SelectedObjects select ((ManagerAssetItem)o).PackageJson.name)
-                    .ToList();
-
-                var customList = new CustomManagerAssetList(
-                    NameConventionBuilder.FormatTextByConvention(listName, NameConventionType.KebabkCase),
-                    listName,
-                    packages
-                );
-
-                PackManagerAssetSettings.Instance.ManagerAssetLists.Add(customList);
+                assetList.Packages.AddRange(packages.Where(i => !assetList.Packages.Contains(i)));
                 BindUnityPackages(root);
-            };
+            }, (modified) =>
+            {
+                if (modified)
+                {
+                    BindUnityPackages(root);
+                }
+            });
+        }
 
-            dialog.ShowDialog("Enter a name for the new list");
+        void RemoveFromListBtn(VisualElement root)
+        {
+            var listName = m_SelectedObjects.listName;
+            var isDefaultList = m_DefaultLists.Any(i => i.listName.Equals(listName));
+
+            if (isDefaultList)
+            {
+                return;
+            }
+
+            var list = PackManagerAssetSettings.Instance.ManagerAssetLists.First(i => i.Name.Equals(listName));
+            foreach (var package in SelectedPackages)
+            {
+                list.Packages.Remove(package.PackageJson.name);
+            }
+
+            BindUnityPackages(root);
         }
 
         void DisplayPackageDetails(VisualElement root, ManagerAssetItem managerAssetItem)
