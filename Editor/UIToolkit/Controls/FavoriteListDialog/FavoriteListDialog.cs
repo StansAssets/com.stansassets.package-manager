@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using StansAssets.Foundation.Editor;
+using StansAssets.Plugins.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -84,22 +85,22 @@ namespace StansAssets.PackageManager.Editor
 
             selectBtn.clicked += () =>
             {
-                if (!CurrentSelectedItem(out var item)) return;
+                if (!currentSelectedItem(out var item)) return;
 
                 OnConfirm(item);
             };
 
             listViewMich.RemoveButton.clicked += () =>
             {
-                if (!CurrentSelectedItem(out var item)) return;
+                if (!currentSelectedItem(out var item)) return;
 
                 PackManagerAssetSettings.Instance.ManagerAssetLists.Remove(item);
                 existingLists.itemsSource.Remove(item);
-                existingLists.Refresh();
+                existingLists.RebuildInCompatibleMode();
                 m_Modified = true;
             };
 
-            bool CurrentSelectedItem(out CustomManagerAssetList item)
+            bool currentSelectedItem(out CustomManagerAssetList item)
             {
                 if (existingLists.selectedIndex == -1)
                 {

@@ -203,7 +203,7 @@ namespace StansAssets.PackageManager.Editor
                     packageInfo.Package.Dependencies.Add("", "");
                 }
 
-                list.Refresh();
+                list.RebuildInCompatibleMode();
             };
 
             listViewMich.RemoveButton.clicked += () =>
@@ -223,7 +223,7 @@ namespace StansAssets.PackageManager.Editor
 
                 dependencies.RemoveAt(list.selectedIndex);
 
-                list.Refresh();
+                list.RebuildInCompatibleMode();
             };
 
             var listView = listViewMich.ListView;

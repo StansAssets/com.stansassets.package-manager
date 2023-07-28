@@ -49,7 +49,7 @@ namespace StansAssets.PackageManager.Editor
             {
                 var list = listViewMich.ListView;
                 assemblyDefinitionAssets.Add(null);
-                list.Refresh();
+                list.RebuildInCompatibleMode();
             };
 
             listViewMich.RemoveButton.clicked += () =>
@@ -62,7 +62,7 @@ namespace StansAssets.PackageManager.Editor
                 }
 
                 assemblyDefinitionAssets.RemoveAt(list.selectedIndex);
-                list.Refresh();
+                list.RebuildInCompatibleMode();
             };
 
             var listView = listViewMich.ListView;
@@ -93,7 +93,7 @@ namespace StansAssets.PackageManager.Editor
                 field.RegisterValueChangedCallback(evt =>
                 {
                     assemblyDefinitionAssets[i] = evt?.newValue as AssemblyDefinitionAsset;
-                    listView.Refresh();
+                    listView.RebuildInCompatibleMode();
                 });
 
                 var label = e.Q<Label>(AssemblyDefinitionAssetItem.LabelComponent);
@@ -118,7 +118,7 @@ namespace StansAssets.PackageManager.Editor
             {
                 var list = listViewMich.ListView;
                 precompiledAssemblies.Add(PrecompiledAssemblyItem.DefaultEmptyValue);
-                list.Refresh();
+                list.RebuildInCompatibleMode();
             };
 
             listViewMich.RemoveButton.clicked += () =>
@@ -131,7 +131,7 @@ namespace StansAssets.PackageManager.Editor
                 }
 
                 precompiledAssemblies.RemoveAt(list.selectedIndex);
-                list.Refresh();
+                list.RebuildInCompatibleMode();
             };
 
             var listView = listViewMich.ListView;
@@ -159,7 +159,7 @@ namespace StansAssets.PackageManager.Editor
                 field.RegisterValueChangedCallback(evt =>
                 {
                     precompiledAssemblies[i] = evt?.newValue.ToString();
-                    listView.Refresh();
+                    listView.RebuildInCompatibleMode();
                 });
 
                 var item = listView.itemsSource[i];
