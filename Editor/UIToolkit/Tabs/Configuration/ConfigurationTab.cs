@@ -1,5 +1,6 @@
 ﻿#if UNITY_2019_4_OR_NEWER
 using StansAssets.Plugins.Editor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
@@ -15,7 +16,7 @@ namespace StansAssets.PackageManager.Editor
             BindNamingConvention(Root, conf.NamingConvention);
             BindMinimalUnityVersion(Root, conf.UnityVersion);
         }
-
+        
         static void BindNamingConvention(VisualElement root, NamingConvention namingConvention)
         {
             var displayPrefix = root.Q<TextField>("display-prefix");
@@ -23,6 +24,7 @@ namespace StansAssets.PackageManager.Editor
             displayPrefix.RegisterValueChangedCallback(v =>
             {
                 namingConvention.DisplayPrefix = v.newValue;
+                PackConfigurationSettings.Save();
             });
 
             var namePrefix = root.Q<TextField>("name-prefix");
@@ -30,6 +32,16 @@ namespace StansAssets.PackageManager.Editor
             namePrefix.RegisterValueChangedCallback(v =>
             {
                 namingConvention.NamePrefix = v.newValue;
+                PackConfigurationSettings.Save();
+            });
+            
+            
+            var convention = root.Q<EnumField>("naming-convention");
+            convention.Init(namingConvention.ConventionType);
+            convention.RegisterValueChangedCallback(evt =>
+            {
+                namingConvention.ConventionType = (NameConventionType) evt.newValue;
+                PackConfigurationSettings.Save();
             });
         }
         
@@ -38,11 +50,11 @@ namespace StansAssets.PackageManager.Editor
         {
             var unityVersionValue = root.Q<TextField>("unity-version");
             unityVersionValue.SetValueWithoutNotify(unityVersion.Unity);
-            unityVersionValue.RegisterValueChangedCallback(v => { unityVersion.Unity = v.newValue; });
-
-            var unityReleaseValue = root.Q<TextField>("unity-release");
-            unityReleaseValue.SetValueWithoutNotify(unityVersion.UnityRelease);
-            unityReleaseValue.RegisterValueChangedCallback(v => { unityVersion.UnityRelease = v.newValue; });
+            unityVersionValue.RegisterValueChangedCallback(v =>
+            {
+                unityVersion.Unity = v.newValue;
+                PackConfigurationSettings.Save();
+            });
         }
     }
 }

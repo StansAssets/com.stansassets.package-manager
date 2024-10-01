@@ -187,7 +187,7 @@ namespace StansAssets.PackageManager
         static void CreatePackageJson(NewPackageInfo packageInfo)
         {
             var path = $"Packages/{packageInfo.Package.Name}";
-            var json = JsonConvert.SerializeObject(packageInfo.Package);
+            var json = JsonConvert.SerializeObject(packageInfo.Package, Formatting.Indented);
 
             File.WriteAllText($"{path}/package.json", json);
         }

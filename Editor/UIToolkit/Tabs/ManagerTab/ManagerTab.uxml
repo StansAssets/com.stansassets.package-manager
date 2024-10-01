@@ -20,7 +20,7 @@
     </uie:VisualSplitter>
     <uie:Toolbar style="flex-direction: row; min-height: 22px;">
         <ui:Button text="↻" tooltip="Refresh list" name="update-packages-list-button" style="height: 18px; width: 18px;" />
-        <ui:Button text="☒ Discard" tooltip="Remove managed packages" name="discard-assets-button" style="height: 18px; -unity-text-align: middle-center; white-space: nowrap;" />
+        <ui:Button text="☒ Discard" tooltip="Reset Packages list based on current project state" name="discard-assets-button" style="height: 18px; -unity-text-align: middle-center; white-space: nowrap;" />
         <ui:VisualElement name="multiple-selection" class="multiple-selection" style="flex-direction: row; margin-left: 8px;">
             <ui:Label text="Selected: 7" name="selected-count" style="height: 100%; -unity-text-align: middle-left;" />
             <ui:Button text="☑" name="enable-all-btn" tooltip="Enable selected" style="height: 18px; width: 18px;" />

@@ -274,21 +274,22 @@ namespace StansAssets.PackageManager.Editor
                 return element;
             };
 
-            list.onSelectionChanged += objects =>
+            list.onSelectionChange += objects =>
             {
-                if (!objects.Any())
+                var objectsArray = objects as object[] ?? objects.ToArray();
+                if (!objectsArray.Any())
                 {
                     return;
                 }
 
-                var selectedItem = objects.First() as ManagerAssetItem;
+                var selectedItem = objectsArray.First() as ManagerAssetItem;
 
                 m_SelectedAssetItem = selectedItem;
                 DisplayPackageDetails(root, selectedItem);
-                MultipleItemsSelected(root, listName, objects);
+                MultipleItemsSelected(root, listName, objectsArray);
             };
 
-            list.itemHeight = FoldedListViewItem.ItemHeight;
+            list.fixedItemHeight = FoldedListViewItem.ItemHeight;
             list.selectionType = SelectionType.Multiple;
 
             var foldout = fdList.Q<Foldout>();
@@ -545,6 +546,9 @@ namespace StansAssets.PackageManager.Editor
                         : PackageAssetState.Disable;
                 }
             }
+            
+            EditorUtility.SetDirty(PackManagerAssetSettings.Instance);
+            AssetDatabase.SaveAssetIfDirty(PackManagerAssetSettings.Instance);
         }
     }
 }

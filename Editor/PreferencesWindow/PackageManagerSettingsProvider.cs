@@ -12,10 +12,10 @@ namespace StansAssets.PackageManager.Editor
     [UsedImplicitly]
     class PackageManagerSettingsProvider : PackagePreferencesWindow
     {
+        
         protected override PackageInfo GetPackageInfo()
             => PackageManagerUtility.GetPackageInfo(PackageManagerConfig.PackageName);
-        protected override string DisplayName => PackageManagerConfig.DisplayName;
-        protected override string SettingsPath => $"{PluginsDevKitPackage.RootMenu}/{DisplayName}";
+        protected override string SettingsPath => $"{PluginsDevKitPackage.RootMenu}/{PackageManagerConfig.DisplayName}";
         protected override SettingsScope Scope => SettingsScope.Project;
         protected override void OnActivate(string searchContext, VisualElement rootElement)
         {

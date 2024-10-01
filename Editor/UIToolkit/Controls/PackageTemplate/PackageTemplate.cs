@@ -30,19 +30,35 @@ namespace StansAssets.PackageManager.Editor
         {
             var allowUnsafeCode = root.Q<Toggle>("allow-unsafe-code");
             allowUnsafeCode.SetValueWithoutNotify(general.AllowUnsafeCode);
-            allowUnsafeCode.RegisterValueChangedCallback(v => general.AllowUnsafeCode = v.newValue);
+            allowUnsafeCode.RegisterValueChangedCallback(v =>
+            {
+                general.AllowUnsafeCode = v.newValue;
+                PackConfigurationSettings.Save();
+            });
 
             var noEngineReferences = root.Q<Toggle>("no-engine-references");
             noEngineReferences.SetValueWithoutNotify(general.NoEngineReferences);
-            noEngineReferences.RegisterValueChangedCallback(v => general.NoEngineReferences = v.newValue);
+            noEngineReferences.RegisterValueChangedCallback(v =>
+            {
+                general.NoEngineReferences = v.newValue;
+                PackConfigurationSettings.Save();
+            });
 
             var overrideReferenced = root.Q<Toggle>("override-references");
             overrideReferenced.SetValueWithoutNotify(general.OverrideReferences);
-            overrideReferenced.RegisterValueChangedCallback(v => general.OverrideReferences = v.newValue);
+            overrideReferenced.RegisterValueChangedCallback(v =>
+            {
+                general.OverrideReferences = v.newValue;
+                PackConfigurationSettings.Save();
+            });
 
             var autoReferenced = root.Q<Toggle>("auto-referenced");
             autoReferenced.SetValueWithoutNotify(general.AutoReferenced);
-            autoReferenced.RegisterValueChangedCallback(v => general.AutoReferenced = v.newValue);
+            autoReferenced.RegisterValueChangedCallback(v =>
+            {
+                general.AutoReferenced = v.newValue;
+                PackConfigurationSettings.Save();
+            });
         }
 
         static void BindFoldersFields(VisualElement root, FoldersSpecification folders)
@@ -50,7 +66,11 @@ namespace StansAssets.PackageManager.Editor
             var runtimeTests = root.Q<Toggle>("runtime-tests");
             runtimeTests.SetEnabled(folders.Runtime);
             runtimeTests.SetValueWithoutNotify(folders.RuntimeTests);
-            runtimeTests.RegisterValueChangedCallback(v => folders.RuntimeTests = v.newValue);
+            runtimeTests.RegisterValueChangedCallback(v =>
+            {
+                folders.RuntimeTests = v.newValue;
+                PackConfigurationSettings.Save();
+            });
 
             var runtime = root.Q<Toggle>("runtime");
             runtime.SetValueWithoutNotify(folders.Runtime);
@@ -58,12 +78,17 @@ namespace StansAssets.PackageManager.Editor
             {
                 folders.Runtime = v.newValue;
                 runtimeTests.SetEnabled(folders.Runtime);
+                PackConfigurationSettings.Save();
             });
 
             var editorTests = root.Q<Toggle>("editor-tests");
             editorTests.SetEnabled(folders.Editor);
             editorTests.SetValueWithoutNotify(folders.EditorTests);
-            editorTests.RegisterValueChangedCallback(v => folders.EditorTests = v.newValue);
+            editorTests.RegisterValueChangedCallback(v =>
+            {
+                folders.EditorTests = v.newValue;
+                PackConfigurationSettings.Save();
+            });
 
             var editor = root.Q<Toggle>("editor");
             editor.SetValueWithoutNotify(folders.Editor);
@@ -71,6 +96,7 @@ namespace StansAssets.PackageManager.Editor
             {
                 folders.Editor = v.newValue;
                 editorTests.SetEnabled(folders.Editor);
+                PackConfigurationSettings.Save();
             });
         }
     }

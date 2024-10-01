@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using StansAssets.Foundation.Editor;
 using StansAssets.Plugins.Editor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace StansAssets.PackageManager.Editor
@@ -67,22 +68,31 @@ namespace StansAssets.PackageManager.Editor
             const string displayNameComponent = "display-name";
             const string packageNameComponent = "package-name";
             const string assemblyNameComponent = "assembly-name";
+            
             const string packageDescriptionComponent = "package-description";
 
             var package = packageInfo.Package;
 
             var displayName = root.Q<TextField>(displayNameComponent);
-            displayName.SetValueWithoutNotify(packageInfo.Configuration.NamingConvention.DisplayPrefix);
+            
+            displayName.SetValueWithoutNotify(package.DisplayName);
             displayName.RegisterValueChangedCallback(v =>
             {
                 UpdatePackageName(root, v.newValue, packageNameComponent, packageInfo);
-
                 package.DisplayName = v.newValue;
+            });
+            
+            var convention = root.Q<EnumField>("naming-convention");
+            convention.Init(packageInfo.Configuration.NamingConvention.ConventionType);
+            convention.RegisterValueChangedCallback(evt =>
+            {
+                packageInfo.Configuration.NamingConvention.ConventionType =  (NameConventionType) evt.newValue;
+                UpdatePackageName(root, package.DisplayName, packageNameComponent, packageInfo);
             });
 
             var packageName = root.Q<TextField>(packageNameComponent);
             packageName.userData = false;
-            packageName.SetValueWithoutNotify(packageInfo.Configuration.NamingConvention.NamePrefix.ToLower());
+            packageName.SetValueWithoutNotify(package.Name);
             packageName.RegisterValueChangedCallback(v =>
             {
                 UpdateAssemblyName(root, v.newValue, packageInfo);
@@ -93,7 +103,7 @@ namespace StansAssets.PackageManager.Editor
 
             var assemblyName = root.Q<TextField>(assemblyNameComponent);
             assemblyName.userData = false;
-            assemblyName.SetValueWithoutNotify(packageInfo.Configuration.NamingConvention.NamePrefix);
+            assemblyName.SetValueWithoutNotify(packageInfo.AssemblyName);
             assemblyName.RegisterValueChangedCallback(v =>
             {
                 assemblyName.userData = true;
@@ -129,6 +139,7 @@ namespace StansAssets.PackageManager.Editor
         {
             var textField = root.Q<TextField>("assembly-name");
 
+            
             if ((bool)textField.userData == false || string.IsNullOrEmpty(textField.value))
             {
                 var namingConvention = packageInfo.Configuration.NamingConvention;
@@ -136,7 +147,7 @@ namespace StansAssets.PackageManager.Editor
                     namingConvention.NamePrefix,
                     namingConvention.NamePrefix,
                     false,
-                    NameConventionType.PascalCase);
+                    namingConvention.ConventionType);
 
                 textField.userData = false;
                 packageInfo.AssemblyName = formattedName;
@@ -169,18 +180,12 @@ namespace StansAssets.PackageManager.Editor
         static void BindVersions(VisualElement root, NewPackageInfo packageInfo)
         {
             var package = packageInfo.Package;
-            var unityVersion = packageInfo.Configuration.UnityVersion;
-
             var versionValue = root.Q<TextField>("version-value");
             versionValue.RegisterValueChangedCallback(v => { package.Version = v.newValue; });
 
             var unityVersionValue = root.Q<TextField>("unity-version");
-            unityVersionValue.SetValueWithoutNotify(unityVersion.Unity);
+            unityVersionValue.SetValueWithoutNotify(package.Unity);
             unityVersionValue.RegisterValueChangedCallback(v => { package.Unity = v.newValue; });
-
-            var unityReleaseValue = root.Q<TextField>("unity-release");
-            unityReleaseValue.SetValueWithoutNotify(unityVersion.UnityRelease);
-            unityReleaseValue.RegisterValueChangedCallback(v => { package.UnityRelease = v.newValue; });
         }
 
         static void BindDependencies(VisualElement root, NewPackageInfo packageInfo)

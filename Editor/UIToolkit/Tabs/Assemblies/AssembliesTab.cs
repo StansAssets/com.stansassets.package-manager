@@ -8,6 +8,7 @@ using StansAssets.Plugins.Editor;
 using UnityEditor.Compilation;
 using UnityEditor.UIElements;
 using UnityEditorInternal;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Label = UnityEngine.UIElements.Label;
 
@@ -37,7 +38,11 @@ namespace StansAssets.PackageManager.Editor
         {
             var allowUnsafeCode = root.Q<Toggle>("asd-references-use-guids");
             allowUnsafeCode.SetValueWithoutNotify(assemblyDefinitions.UseGuids);
-            allowUnsafeCode.RegisterValueChangedCallback(v => assemblyDefinitions.UseGuids = v.newValue);
+            allowUnsafeCode.RegisterValueChangedCallback(v =>
+            {
+                assemblyDefinitions.UseGuids = v.newValue;
+                PackConfigurationSettings.Save();
+            });
         }
 
         static void BindAssemblyDefinitionAssets(VisualElement root, string listViewName,
@@ -63,6 +68,7 @@ namespace StansAssets.PackageManager.Editor
 
                 assemblyDefinitionAssets.RemoveAt(list.selectedIndex);
                 list.RebuildInCompatibleMode();
+                PackConfigurationSettings.Save();
             };
 
             var listView = listViewMich.ListView;
@@ -80,20 +86,23 @@ namespace StansAssets.PackageManager.Editor
                 var field = element.Q<ObjectField>(AssemblyDefinitionAssetItem.ValueComponent);
                 field.objectType = typeof(AssemblyDefinitionAsset);
                 field.value = null;
-
+                
                 return element;
             };
 
             listView.bindItem = (e, i) =>
             {
                 var item = listView.itemsSource[i] as AssemblyDefinitionAsset;
-
                 var field = e.Q<ObjectField>(AssemblyDefinitionAssetItem.ValueComponent);
-                field.value = item;
+                field.SetValueWithoutNotify(item);
+                
+                
+                //That will generate double callback, but we will leave with it for a while
                 field.RegisterValueChangedCallback(evt =>
                 {
                     assemblyDefinitionAssets[i] = evt?.newValue as AssemblyDefinitionAsset;
                     listView.RebuildInCompatibleMode();
+                    PackConfigurationSettings.Save();
                 });
 
                 var label = e.Q<Label>(AssemblyDefinitionAssetItem.LabelComponent);
@@ -156,10 +165,12 @@ namespace StansAssets.PackageManager.Editor
             {
                 var field = e.Q<EnumField>(PrecompiledAssemblyItem.ValueComponent);
 
+                //That will generate double callback, but we will leave with it for a while
                 field.RegisterValueChangedCallback(evt =>
                 {
                     precompiledAssemblies[i] = evt?.newValue.ToString();
                     listView.RebuildInCompatibleMode();
+                    PackConfigurationSettings.Save();
                 });
 
                 var item = listView.itemsSource[i];
@@ -181,7 +192,7 @@ namespace StansAssets.PackageManager.Editor
                     return;
                 }
 
-                field.value = itemValue;
+                field.SetValueWithoutNotify(itemValue);
 
                 var label = e.Q<Label>(PrecompiledAssemblyItem.LabelComponent);
                 label.text = itemValue.ToString();

@@ -24,6 +24,10 @@ namespace StansAssets.PackageManager
         internal NewPackageInfo(PackConfiguration configuration)
         {
             Configuration = configuration;
+            Package.DisplayName = configuration.NamingConvention.DisplayPrefix;
+            Package.Name = configuration.NamingConvention.NamePrefix.ToLower();
+            AssemblyName = configuration.NamingConvention.NamePrefix;
+            Package.Unity = configuration.UnityVersion.Unity;
         }
 
         AssemblyDefinitionInfo FetchEditorAssemblyDefinitionInfo()
@@ -228,19 +232,6 @@ namespace StansAssets.PackageManager
         /// </summary>
         [JsonProperty("licensesUrl")]
         internal string LicensesUrl { get; set; } = "https://mit-license.org/";
-
-        /// <summary>
-        /// Part of a Unity version indicating the specific release of Unity that the package is compatible with.
-        /// You can use this property when an updated package requires changes made during
-        /// the Unity alpha/beta development cycle. This might be the case if the package needs newly introduced APIs,
-        /// or uses existing APIs that have changed in a non-backward-compatible way without API Updater rules.
-        ///
-        /// The expected format is “<UPDATE><RELEASE>” (for example, 0b4).
-        ///
-        /// Note: If you omit the recommended unity property, this property has no effect.
-        /// </summary>
-        [JsonProperty("unityRelease")]
-        internal string UnityRelease { get; set; } = "";
     }
 
     [Serializable]

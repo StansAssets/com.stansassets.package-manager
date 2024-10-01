@@ -10,18 +10,15 @@
                 <ui:TextField name="package-name" label="Package Name" style="flex-grow: 1;" />
                 <ui:TextField name="assembly-name" label="Assembly Name" style="flex-grow: 1;" />
                 <ui:TextField label="Version" value="0.0.1" text="0.0.1" name="version-value" tooltip="0.0.1 (MAJOR.MINOR.PATCH)" />
+                <ui:TextField label="Unity Version" name="unity-version" tooltip="2019.4" />
+                <uie:EnumField  label="Naming Convention" name="naming-convention"  />
                 <ui:VisualElement style="margin-top: 10px;">
                     <ui:Label text="Brief Description" />
                     <ui:TextField multiline="true" name="package-description" style="min-height: 40px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </StansAssets.Foundation.UIElements.SettingsBlock>
-        <StansAssets.Foundation.UIElements.SettingsBlock label="Minimal Unity Version" style="margin-bottom: 0;">
-            <ui:VisualElement>
-                <ui:TextField label="Unity" name="unity-version" tooltip="2019.4" />
-                <ui:TextField label="Release" name="unity-release" tooltip="40f1" />
-            </ui:VisualElement>
-        </StansAssets.Foundation.UIElements.SettingsBlock>
+        
         <StansAssets.Foundation.UIElements.SettingsBlock label="Dependencies">
             <StansAssets.PackageManager.Editor.ListViewMich name="package-dependencies-list" />
         </StansAssets.Foundation.UIElements.SettingsBlock>

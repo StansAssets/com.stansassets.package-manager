@@ -1,5 +1,5 @@
 .item-border {
     padding-left: 2px;
-    font-size: 13px;
+    font-size: 11px;
     border-bottom-width: 1px;
 }

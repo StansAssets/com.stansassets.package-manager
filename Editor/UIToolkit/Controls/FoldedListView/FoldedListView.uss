@@ -1,5 +1,5 @@
 .list-foldout-item {
-    font-size: 14px;
+    font-size: 12px;
     border-bottom-width: 1px;
     height: 24px;
 }

@@ -11,6 +11,7 @@ namespace StansAssets.PackageManager
         [SerializeField] List<PackConfiguration> m_Configurations = new List<PackConfiguration>();
 
         public override string PackageName => PackageManagerConfig.PackageName;
+        protected override bool IsEditorOnly => true;
 
         internal List<PackConfiguration> Configurations => m_Configurations;
 

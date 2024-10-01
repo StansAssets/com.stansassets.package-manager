@@ -80,7 +80,6 @@ namespace StansAssets.PackageManager
             to.NamingConvention.ConventionType = NamingConvention.ConventionType;
 
             to.UnityVersion.Unity = UnityVersion.Unity;
-            to.UnityVersion.UnityRelease = UnityVersion.UnityRelease;
 
             CopyAssemblyDefinitionsSpecification(AssemblyDefinitions, to.AssemblyDefinitions);
         }
