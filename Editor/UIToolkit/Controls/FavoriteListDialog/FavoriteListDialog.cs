@@ -40,7 +40,7 @@ namespace StansAssets.PackageManager.Editor
             var existingLists = listViewMich.ListView;
             var lists = PackManagerAssetSettings.Instance.ManagerAssetLists.ToList();
 
-            existingLists.itemHeight = 16;
+            existingLists.fixedItemHeight = 16;
             existingLists.itemsSource = lists;
             existingLists.makeItem += () => new Label();
             existingLists.bindItem += (element, i) =>

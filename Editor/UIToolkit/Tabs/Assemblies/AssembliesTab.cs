@@ -72,7 +72,7 @@ namespace StansAssets.PackageManager.Editor
             };
 
             var listView = listViewMich.ListView;
-            listView.itemHeight = 22;
+            listView.fixedItemHeight = 22;
             listView.itemsSource = assemblyDefinitionAssets;
 
             listView.makeItem += () =>
@@ -144,7 +144,7 @@ namespace StansAssets.PackageManager.Editor
             };
 
             var listView = listViewMich.ListView;
-            listView.itemHeight = 22;
+            listView.fixedItemHeight = 22;
             listView.itemsSource = precompiledAssemblies;
 
             listView.makeItem += () =>

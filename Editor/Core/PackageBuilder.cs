@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 
 using StansAssets.Foundation.Editor;
-
-using Unity.Plastic.Newtonsoft.Json;
-
+using Newtonsoft.Json;
 using UnityEditor;
-
 using UnityEngine;
 
 namespace StansAssets.PackageManager

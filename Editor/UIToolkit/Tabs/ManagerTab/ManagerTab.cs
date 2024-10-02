@@ -315,7 +315,7 @@ namespace StansAssets.PackageManager.Editor
             void SetToggleHeight(bool v)
             {
                 foldout.style.height = v
-                    ? list.itemHeight * list.itemsSource.Count + 24 + 21
+                    ? list.fixedItemHeight * list.itemsSource.Count + 24 + 21
                     : 24;
                 foldout.style.flexGrow = v ? 1 : 0;
             }

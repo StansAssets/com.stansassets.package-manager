@@ -5,7 +5,7 @@
   "unity": "2019.4",
   "description": "A tool for creating, configuring and managing plugins in the Unity project.",
   "dependencies": {
-    "com.stansassets.plugins-dev-kit": "1.0.6",
+    "com.stansassets.plugins-dev-kit": "1.0.27",
     "com.stansassets.foundation": "2.0.1"
   },
   "keywords": [
